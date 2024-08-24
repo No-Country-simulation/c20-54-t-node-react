@@ -1,21 +1,18 @@
 # c20-54-t-node-react
-Simulación Laboral No country
 
+In this proyect we let doing a sistem of recomendation for tevelers whit a limit resourses.
 
-in this proyect we let doing a sistem of recomendation for tevelers whit a limit resourses.
+## TECNOLOGIES
 
-# TECNOLOGIES
-
-## FRONT-END
+### FRONT-END
 
 - REACT 
 
-## BACK-END
+### BACK-END
 
 - NODE 
 - EXPRESS
 
-
-## DATA BASE
+### DATA BASE
 
 - MONGODB

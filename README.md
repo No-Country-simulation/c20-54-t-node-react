@@ -5,7 +5,7 @@ In this proyect we let doing a sistem of recomendation for tevelers whit a limit
 ## MAIN OBJECTIVE
 Whit this platform we want to do a better search of destinations whit a specific price. 
 
-## TECNOLOGIES
+## TECHNOLOGIES
 
 ### FRONT-END
 

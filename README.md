@@ -18,4 +18,4 @@ Whit this platform we want to do a better search of destinations whit a specific
 
 ### DATA BASE
 
-- MONGODB
+- MONGOODB

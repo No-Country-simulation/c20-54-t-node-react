@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 // connect database
 const db = async () => {
   try {

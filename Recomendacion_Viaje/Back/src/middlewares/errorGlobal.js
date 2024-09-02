@@ -21,3 +21,5 @@ const globalError = (error, req, res, next) => {
     });
   }
 }
+
+module.exports = globalError;

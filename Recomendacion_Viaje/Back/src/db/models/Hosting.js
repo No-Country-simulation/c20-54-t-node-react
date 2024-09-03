@@ -2,11 +2,30 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const hostingSchema = new Schema({
-  name: String,
-  description: String,
-  rating: Number,
-  location: String,
-  image: String,
+  name: {
+    type: String,
+    required: true
+  },
+  service: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: Number,
+    required: true
+  },
+  images: {
+    type: [String],
+    required: true
+  },
+  imageFirst: {
+    type: String,
+    required: true
+  },
+  status: {
+    type: String,
+    default: 'active'
+  }
 });
 
 module.exports = mongoose.model('Hosting', hostingSchema);

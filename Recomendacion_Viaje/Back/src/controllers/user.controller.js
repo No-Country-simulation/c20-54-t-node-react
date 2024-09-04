@@ -1,22 +1,15 @@
 // models
 const User = require('../db/models/User')
+const tryCatch = require('../util/tryCatch')
 
-exports.getUsers = async (req, res, next) => {
-  try {
+exports.getUsers = tryCatch(async (req, res, next) => {
 
-    const idUser = req.params.id
+  const users = await User.find()
+    .select('-password -createdAt -updatedAt -__v')
 
-    const user = await User.findOne({ _id: idUser })
-      .select('-password -createdAt -updatedAt -__v')
+  return res.status(200).json({
+    message: 'Users found',
+    data: users
+  })
 
-    if (!user) return res.status(404).json({ message: 'User not found' })
-
-    return res.status(200).json({
-      message: 'User found',
-      data: user
-    })
-
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
-}
+})

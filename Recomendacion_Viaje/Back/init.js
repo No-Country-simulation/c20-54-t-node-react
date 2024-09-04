@@ -4,7 +4,7 @@ const express = require('express')
 const userRouter = require('./src/routers/user.router')
 
 // middleware
-const errorMiddleware = require('./src/middlewares/error.middleware')
+const errorMiddleware = require('./src/middlewares/errorGlobal')
 
 const app = express()
 

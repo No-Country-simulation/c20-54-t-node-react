@@ -5,8 +5,9 @@ const transportSchema = new Schema({
   name: String,
   rating: Number,
   images: [String],
-  image: String,
+  firstImage: String,
   description: String,
+  service: [String],
   status: {
     type: Boolean,
     default: true

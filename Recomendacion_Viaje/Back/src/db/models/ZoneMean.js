@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const zoneMeanSchema = new Schema({
   meanID: {
     type: Schema.Types.ObjectId,
-    ref: 'Zone'
+    ref: 'Mean'
   },
   type: {
     type: String,

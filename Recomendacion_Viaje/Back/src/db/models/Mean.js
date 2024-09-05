@@ -15,6 +15,9 @@ const meanSchema = new Schema({
   prices: [Number],
   to: String,
   from: String,
+  description: Object,
+  images: [String],
+  firstImage: String,
   status: {
     type: String,
     enum: ['active', 'inactive', 'delete'],

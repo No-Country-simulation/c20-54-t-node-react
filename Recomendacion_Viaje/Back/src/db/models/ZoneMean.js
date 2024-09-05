@@ -45,3 +45,5 @@ const zoneMeanSchema = new Schema({
     default: 'active'
   }
 });
+
+module.exports = mongoose.model('ZoneMean', zoneMeanSchema);

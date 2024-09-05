@@ -25,4 +25,4 @@ const meanSchema = new Schema({
   }
 });
 
-moduel.exports = mongoose.model('Mean', meanSchema);
+module.exports = mongoose.model('Mean', meanSchema);

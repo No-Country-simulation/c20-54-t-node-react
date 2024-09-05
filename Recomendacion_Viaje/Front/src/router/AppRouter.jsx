@@ -4,6 +4,7 @@ import Layout from '../components/Layout/Layout';
 import Landing from '../pages/Landing';
 import LoginBooking from '../pages/LoginBooking';
 import DetailsCard from '../pages/DetailsCard';
+import Home from '../pages/Home';
 
 const AppRouter = () => {
   return (

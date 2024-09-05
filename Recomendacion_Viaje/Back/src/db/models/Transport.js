@@ -6,11 +6,11 @@ const transportSchema = new Schema({
   rating: Number,
   images: [String],
   firstImage: String,
-  description: String,
+  description: Object,
   service: [String],
   status: {
-    type: Boolean,
-    default: true
+    type: String,
+    default: 'active'
   }
 });
 

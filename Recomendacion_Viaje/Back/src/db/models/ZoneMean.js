@@ -27,6 +27,18 @@ const zoneMeanSchema = new Schema({
     type: Number,
     default: 0
   },
+  description: {
+    type: Object,
+  },
+  images: {
+    type: [String],
+    default: []
+  },
+  firstImage: {
+    type: String,
+    default: ''
+
+  },
   status: {
     type: String,
     enum: ['active', 'inactive', 'delete'],

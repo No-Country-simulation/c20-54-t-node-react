@@ -28,6 +28,14 @@ const packageSchema = new Schema({
     type: Number,
     required: true
   },
+  description: {
+    type: Object,
+    required: true
+  },
+  image: {
+    type: String,
+    required: true
+  },
   status: {
     type: String,
     enum: ['active', 'inactive', 'delete'],

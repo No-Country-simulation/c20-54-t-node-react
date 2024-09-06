@@ -22,3 +22,15 @@ exports.getPackageByPrice = tryCatch(async (req, res, next) => {
     data: packages
   })
 })
+
+exports.getPackageById = tryCatch(async (req, res, next) => {
+  // obtener el paquete por id pero tambien obtenemos los datos de la referencia  meanID y roomID
+  const package = await Package.findById(req.params.id).populate('meanID roomID')
+
+  if (!package) return next(new AppError('Package not found', 404))
+
+  return res.status(200).json({
+    message: 'Package found',
+    data: package
+  })
+})

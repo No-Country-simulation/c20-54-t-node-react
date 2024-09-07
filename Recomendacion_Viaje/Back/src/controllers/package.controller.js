@@ -2,8 +2,8 @@
 const Package = require('../db/models/Package')
 
 // utils
-const AppError = require('../utils/AppError')
-const tryCatch = require('../utils/tryCatch')
+const AppError = require('../util/AppError')
+const tryCatch = require('../util/tryCatch')
 
 exports.getPackageByPrice = tryCatch(async (req, res, next) => {
   const packages = await Package.find({

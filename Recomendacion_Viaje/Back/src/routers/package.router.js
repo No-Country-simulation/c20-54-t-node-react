@@ -10,3 +10,5 @@ const {
 // routers
 
 router.get('/', getPackages);
+
+module.exports = { packageRouter: router }

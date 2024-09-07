@@ -11,9 +11,11 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use("/api/v1/", () => {
-  console.log("hello")
+// create endpoints
+app.get("/", (req, res) => {
+  res.send("Hello World")
 })
+
 app.use("/api/v1/users/", userRouter)
 app.use(errorMiddleware)
 

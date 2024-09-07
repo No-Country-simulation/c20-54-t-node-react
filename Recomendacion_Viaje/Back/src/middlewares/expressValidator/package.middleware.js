@@ -1,9 +1,7 @@
-const { body } = require('express-validator');
+const { body, query } = require('express-validator');
 
 exports.getPackages = [
-  body('page').isInt().optional(),
-  body('limit').isInt().optional(),
-  body('to').isString().optional(),
-  body('from').isString().optional(),
-  body('status').isString().optional()
+  query('price').optional().isNumeric().withMessage('price must be a number value'),
+  query('from').optional().isString().withMessage('form must be a string value'),
+  query('to').optional().isString().withMessage('to must be a string value')
 ]

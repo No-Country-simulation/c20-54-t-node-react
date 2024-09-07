@@ -2,7 +2,7 @@ const express = require('express')
 
 // routers
 const { userRouter } = require('./src/routers/user.router')
-const packageRouter = require('./src/routers/package.router')
+const { packageRouter } = require('./src/routers/package.router')
 
 // middleware
 const errorMiddleware = require('./src/middlewares/errorGlobal')

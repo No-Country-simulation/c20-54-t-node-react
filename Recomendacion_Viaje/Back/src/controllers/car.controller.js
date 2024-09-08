@@ -1,6 +1,4 @@
 // models
-import * as next from 'next'
-import * as next from 'next'
 const Car = require('../db/models/Car')
 const Package = require('../db/models/Package')
 

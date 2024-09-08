@@ -19,7 +19,10 @@ exports.getCar = tryCatch(async (req, res, next) => {
 exports.addPackageCar = tryCatch(async (req, res, next) => {
   const packageID = req.body.packageID
 
-  const car = await Car.findOne({ status: 'pending' })
+  const car = await Car.findOne({
+    user: req.user.id,
+    status: 'pending'
+  })
 
   if (!car) {
     const newCar = await Car.create({
@@ -45,7 +48,10 @@ exports.addPackageCar = tryCatch(async (req, res, next) => {
 exports.removePackageCar = tryCatch(async (req, res, next) => {
   const packageID = req.body.packageID
 
-  const car = await Car.findOne({ status: 'pending' })
+  const car = await Car.findOne({
+    user: req.user.id,
+    status: 'pending'
+  })
 
   if (!car) return next(new AppError('Car not found', 404))
 

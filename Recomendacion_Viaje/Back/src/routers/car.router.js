@@ -13,3 +13,7 @@ const router = app.Router();
 router.get('/car', auth, getCar)
 
 router.post('/car', auth, addPackageCar)
+
+router.delete('/car', auth, deleteCar)
+
+module.exports = { carRouter: router }

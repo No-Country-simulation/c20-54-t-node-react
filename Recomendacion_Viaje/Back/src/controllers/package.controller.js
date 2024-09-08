@@ -27,21 +27,19 @@ exports.getPackages = tryCatch(async (req, res, next) => {
   const { price, from = '', to = '' } = req.query
 
   const packages = await Package.find({
-    price: {
+    priceTotal: {
       $lte: price
     },
-    to: {
-      $gte: to
-    },
     from: {
-      $lte: from
+      $regex: from,
+      $options: 'i'
+    },
+    to: {
+      $regex: to,
+      $options: 'i'
     }
-  })
+  }).exec()
 
-  if (packages.length === 0) return res.status(404).json({
-    message: 'No packages found',
-    data: []
-  })
 
   return res.status(200).json({
     message: 'Packages found',

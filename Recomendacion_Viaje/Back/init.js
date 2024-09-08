@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/package", packageRouter)
 app.use("/api/v1/car", carRouter)
-app.use("/api/v1/users/", userRouter)
+app.use("/api/v1/users", userRouter)
 app.use(errorMiddleware)
 
 module.exports = app

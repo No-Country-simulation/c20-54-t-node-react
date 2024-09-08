@@ -1,5 +1,6 @@
 // models
 const Package = require('../db/models/Package')
+const Room = require('../db/models/Room')
 
 // utils
 const AppError = require('../util/AppError')
@@ -49,13 +50,23 @@ exports.getPackages = tryCatch(async (req, res, next) => {
 })
 
 exports.getPackageById = tryCatch(async (req, res, next) => {
+  console.log('get package by id ', req.params.id)
   // obtener el paquete por id pero tambien obtenemos los datos de la referencia  meanID y roomID
-  const package = await Package.findById(req.params.id).populate('meanID roomID')
+  const package = await Package.findOne({
+    _id: req.params.id
+  })
 
   if (!package) return next(new AppError('Package not found', 404))
 
+  const findRoom = await Room.findOne({
+    _id: package.roomID
+  })
+
   return res.status(200).json({
     message: 'Package found',
-    data: package
+    data: {
+      package,
+      room: findRoom
+    }
   })
 })

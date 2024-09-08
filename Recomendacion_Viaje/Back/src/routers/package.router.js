@@ -9,12 +9,14 @@ const {
 
 // controllers -> package
 const {
-  getPackages
+  getPackages,
+  getPackageById
 } = require('../controllers/package.controller');
 const validate = require('../middlewares/validateExpress');
 
 // routers
 
 router.get('/', validate(getPackagesValidate), getPackages);
+router.get('/:id', getPackageById);
 
 module.exports = { packageRouter: router }

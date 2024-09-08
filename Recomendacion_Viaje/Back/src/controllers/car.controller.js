@@ -8,6 +8,14 @@ const Package = require('../db/models/Package')
 const AppError = require('../util/AppError')
 const tryCatch = require('../util/tryCatch')
 
+exports.getCar = tryCatch(async (req, res, next) => {
+  const car = await Car.findOne({ userID: req.user.id, status: 'pending' }).populate('items.packageID')
+
+  if (!car) return next(new AppError('Car not found', 404))
+
+  return res.status(200).json({ status: 'success', data: car })
+})
+
 exports.addPackageCar = tryCatch(async (req, res, next) => {
   const packageID = req.body.packageID
 

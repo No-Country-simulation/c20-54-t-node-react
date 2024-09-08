@@ -75,3 +75,15 @@ exports.removePackageCar = tryCatch(async (req, res, next) => {
 
   return res.status(200).json({ status: 'success', data: car })
 })
+
+exports.buyCar = tryCatch(async (req, res, next) => {
+  const car = await Car.findOne({ userID: req.user.id, status: 'pending' }).populate('items.packageID')
+
+  if (!car) return next(new AppError('Car not found', 404))
+
+  await car.updateOne({ status: 'paid' })
+
+  await car.save()
+
+  return res.status(200).json({ status: 'success', data: car })
+})

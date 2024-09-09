@@ -31,7 +31,7 @@ const Navbar = () => {
         <button
             // onClick={() => dispatch(showLogin(true))}
             type="button"
-            className="flex text-sm bg-action-color text-secondary-color font-bold py-2 px-4 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
+            className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
           >
             Sing In
           </button>

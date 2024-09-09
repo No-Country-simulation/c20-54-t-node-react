@@ -1,10 +1,17 @@
 import React from "react";
 import banner from "../assets/banner1.jpg";
+import filter1 from "../assets/packetFilter.jpg";
+import filter2 from "../assets/hotelFilter.jpg";
+import filter3 from "../assets/transportFilter.jpg";
 import filter from "../assets/banner2.jpg";
 
 const Home = () => {
-  const cards = [1, 2, 3, 4, 5, 6];
-  const categories = ["Alojamiento", "Transporte", "Paquetes"];
+  const cards = [1, 2, 3, 4, 5, 6, 8, 9, 7];
+  const categories = [
+    { name: "Alojamiento", image: filter2 },
+    { name: "Transporte", image: filter3 },
+    { name: "Paquetes", image: filter1 },
+  ];
   return (
     <section className="w-full">
       {/* banner */}
@@ -20,23 +27,23 @@ const Home = () => {
       {/* Filters section by category*/}
       <section className="flex w-full my-4 justify-center">
         <div className="flex w-2/3 ">
-        {categories?.map((item, index) => (
-          <div className="w-1/3 flex justify-center items-center">
-            <figure
-              key={`item-${index}`}
-              className=" relative flex justify-center"
-            >
-              <img
-                className="w-32 h-32 object-cover rounded-full opacity-75 hover:opacity-100"
-                src={filter}
-                alt="banner"
-              />
-              <figcaption className="absolute top-1/2 text-[#00004e] text-xl font-bold">
-                {item}
-              </figcaption>
-            </figure>
-          </div>
-        ))}
+          {categories?.map((item, index) => (
+            <div className="w-1/3 flex justify-center items-center">
+              <figure
+                key={`item-${index}`}
+                className=" relative flex justify-center  text-xl hover:text-2xl "
+              >
+                <img
+                  className="w-32 h-32 hover:w-36 hover:h-36 object-cover rounded-full  opacity-100"
+                  src={item.image}
+                  alt="banner"
+                />
+                <figcaption className="absolute top-1/2  text-action-color font-bold hover:text-xl">
+                  {item.name}
+                </figcaption>
+              </figure>
+            </div>
+          ))}
         </div>
       </section>
       {/* sort filter */}
@@ -90,7 +97,7 @@ const Home = () => {
               <h2 className="w-full font-bold text-lg">Title</h2>
               <button
                 type="button"
-                className="flex text-sm bg-action-color text-secondary-color font-bold py-2 px-4 rounded-full "
+                className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
               >
                 Ver más información y reservar
               </button>

@@ -62,7 +62,7 @@ exports.loginUser = tryCatch(async (req, res, next) => {
 
 exports.registerUser = tryCatch(async (req, res, next) => {
 
-  const { name, lastName, dataBirth, idAth, email, password } = req.body
+  const { name, lastName, dateBirth, idAt, email, password } = req.body
 
   const userExists = await User.findOne({ email })
 
@@ -75,8 +75,8 @@ exports.registerUser = tryCatch(async (req, res, next) => {
   const user = await User.create({
     name,
     lastName,
-    dataBirth,
-    idAth,
+    dateBirth,
+    idAt,
     email,
     password: hasPassword
   })

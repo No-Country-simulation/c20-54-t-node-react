@@ -78,7 +78,7 @@ exports.registerUser = tryCatch(async (req, res, next) => {
     dataBirth,
     idAth,
     email,
-    password
+    password: hasPassword
   })
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })

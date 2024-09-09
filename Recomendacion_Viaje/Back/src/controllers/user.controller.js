@@ -4,6 +4,9 @@ const User = require('../db/models/User')
 // jsonwebtoken
 const jwt = require('jsonwebtoken')
 
+// bcryptjs
+const bcrypt = require('bcryptjs')
+
 // AppError
 const AppError = require('../util/AppError')
 
@@ -37,7 +40,7 @@ exports.loginUser = tryCatch(async (req, res, next) => {
     return next(new AppError('User not found', 404))
   }
 
-  const isMatch = await user.comparePassword(password)
+  const isMatch = bcrypt.compareSync(password, user.password)
 
   if (!isMatch) {
     return next(new AppError('Invalid credentials', 401))

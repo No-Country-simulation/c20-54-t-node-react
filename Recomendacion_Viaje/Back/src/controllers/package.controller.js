@@ -52,6 +52,30 @@ exports.getPackages = tryCatch(async (req, res, next) => {
 
 })
 
+exports.getPackagesAll = tryCatch(async (req, res, next) => {
+  const { limit = 8, page = 1, category = 'completed' } = req.query
+
+  const packages = await Package.find({
+    status: category
+  })
+    .limit(limit * 1)
+    .skip((page - 1) * limit)
+    .exec()
+
+  if (packages.length === 0) return res.status(404).json({
+    message: 'No packages found',
+    data: []
+  })
+
+  return res.status(200).json({
+    message: 'Packages found',
+    data: packages,
+    page: page,
+    limit: limit,
+    total: packages.length
+  })
+})
+
 exports.getPackageById = tryCatch(async (req, res, next) => {
   console.log('get package by id ', req.params.id)
   // obtener el paquete por id pero tambien obtenemos los datos de la referencia  meanID y roomID

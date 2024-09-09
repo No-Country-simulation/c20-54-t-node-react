@@ -25,7 +25,7 @@ exports.getPackageByPrice = tryCatch(async (req, res, next) => {
 })
 
 exports.getPackages = tryCatch(async (req, res, next) => {
-  const { price, from = '', to = '' } = req.query
+  const { price, from = '', to = '', limit = 8, page = 1 } = req.query
 
   const packages = await Package.find({
     priceTotal: {
@@ -39,7 +39,10 @@ exports.getPackages = tryCatch(async (req, res, next) => {
       $regex: to,
       $options: 'i'
     }
-  }).exec()
+  })
+    .limit(limit * 1)
+    .skip((page - 1) * limit)
+    .exec()
 
 
   return res.status(200).json({

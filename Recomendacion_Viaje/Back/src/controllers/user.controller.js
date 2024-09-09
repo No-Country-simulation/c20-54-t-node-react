@@ -56,3 +56,36 @@ exports.loginUser = tryCatch(async (req, res, next) => {
   })
 
 })
+
+exports.registerUser = tryCatch(async (req, res, next) => {
+
+  const { name, lastName, dataBirth, idAth, email, password } = req.body
+
+  const userExists = await User.findOne({ email })
+
+  if (userExists) {
+    return next(new AppError('User already exists', 400))
+  }
+
+  const user = await User.create({
+    name,
+    lastName,
+    dataBirth,
+    idAth,
+    email,
+    password
+  })
+
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
+
+  user.password = undefined
+
+  return res.status(201).json({
+    message: 'User created',
+    data: {
+      user,
+      token
+    }
+  })
+
+})

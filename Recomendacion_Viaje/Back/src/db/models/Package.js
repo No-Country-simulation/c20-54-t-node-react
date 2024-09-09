@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const packageSchema = new Schema({
+  cateogry: {
+    type: String,
+    enum: ['completed', 'hotel', 'restaurant'],
+    required: true
+  },
   from: {
     type: String,
     required: true

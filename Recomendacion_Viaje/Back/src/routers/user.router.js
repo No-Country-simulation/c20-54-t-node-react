@@ -5,11 +5,11 @@ const { getUsers, loginUser, registerUser } = require('../controllers/user.contr
 
 // middleware
 const validate = require('../middlewares/validateExpress');
-const { registerUser: registerUserBody } = require('../middlewares/expressValidator/user.middleware');
+const { registerUser: registerUserBody, loginUser: loginUserBody } = require('../middlewares/expressValidator/user.middleware');
 const router = express.Router();
 
 // routers 
-router.post('/', loginUser)
+router.post('/', validate(loginUserBody), loginUser)
 router.post('/register', validate(registerUserBody), registerUser)
 router.get('/:id', getUsers)
 

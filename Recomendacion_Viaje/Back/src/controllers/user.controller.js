@@ -70,6 +70,8 @@ exports.registerUser = tryCatch(async (req, res, next) => {
     return next(new AppError('User already exists', 400))
   }
 
+  const hasPassword = bcrypt.hashSync(password, 10)
+
   const user = await User.create({
     name,
     lastName,

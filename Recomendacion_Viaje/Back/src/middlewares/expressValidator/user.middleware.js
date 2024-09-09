@@ -1,13 +1,11 @@
 const { body } = require('express-validator');
 
-exports.loginBody = [
-  body('username')
+exports.loginUser = [
+  body('email')
     .notEmpty()
-    .withMessage('Username is required')
-    .isLength({ min: 5 })
-    .withMessage('Username must be at least 5 characters long')
-    .isString()
-    .withMessage('Username must be a string'),
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Email must be a valid email address'),
   body('password')
     .notEmpty()
     .withMessage('Password is required')

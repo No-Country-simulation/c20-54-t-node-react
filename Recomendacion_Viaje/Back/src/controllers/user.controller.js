@@ -10,6 +10,9 @@ const bcrypt = require('bcryptjs')
 // AppError
 const AppError = require('../util/AppError')
 
+// dotenv
+require('dotenv').config()
+
 const tryCatch = require('../util/tryCatch')
 
 exports.getUser = tryCatch(async (req, res, next) => {

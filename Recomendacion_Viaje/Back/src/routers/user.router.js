@@ -1,7 +1,7 @@
 const express = require('express');
 
 // controllers -> user
-const { getUsers, loginUser, registerUser } = require('../controllers/user.controller');
+const { getUser, loginUser, registerUser } = require('../controllers/user.controller');
 
 // middleware
 const validate = require('../middlewares/validateExpress');
@@ -11,7 +11,7 @@ const router = express.Router();
 // routers 
 router.post('/', validate(loginUserBody), loginUser)
 router.post('/register', validate(registerUserBody), registerUser)
-router.get('/:id', getUsers)
+router.get('/:id', getUser)
 
 
 module.exports = { userRouter: router };

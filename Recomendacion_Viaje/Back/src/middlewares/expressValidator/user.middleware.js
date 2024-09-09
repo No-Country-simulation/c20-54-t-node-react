@@ -19,7 +19,7 @@ exports.loginBody = [
 ]
 
 exports.registerUser = [
-  body('username')
+  body('name')
     .notEmpty()
     .withMessage('Username is required')
     .isLength({ min: 5 })
@@ -33,9 +33,7 @@ exports.registerUser = [
     .withMessage('Last Name must be a string'),
   body('dateBirth')
     .notEmpty()
-    .withMessage('Date of Birth is required')
-    .isISO8601()
-    .withMessage('Date of Birth must be a valid date'),
+    .withMessage('Date of Birth is required'),
   body('idAt')
     .notEmpty()
     .withMessage('Gender is required')

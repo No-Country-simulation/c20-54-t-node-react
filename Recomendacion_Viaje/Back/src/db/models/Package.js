@@ -24,6 +24,11 @@ const packageSchema = new Schema({
     ref: 'Mean',
     required: true
   },
+  rating: {
+    type: Number,
+    enum: [0, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
+    default: 0
+  },
   priceTotal: {
     type: Number,
     required: true
@@ -35,6 +40,20 @@ const packageSchema = new Schema({
   image: {
     type: String,
     required: true
+  },
+  comments: {
+    type: Array,
+    default: [
+      {
+        userID: {
+          type: Schema.Types.ObjectId,
+          ref: 'User'
+        },
+        content: String,
+        rating: Number,
+        date: Date
+      }
+    ]
   },
   status: {
     type: String,

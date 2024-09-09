@@ -11,8 +11,10 @@ const hostingSchema = new Schema({
     required: true
   },
   description: {
-    type: Number,
-    required: true
+    type: Object,
+    default: {
+      content: '',
+    }
   },
   images: {
     type: [String],

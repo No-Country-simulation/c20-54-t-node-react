@@ -40,7 +40,10 @@ const packageSchema = new Schema({
   },
   description: {
     type: Object,
-    required: true
+    default: {
+      title: String,
+      content: String
+    }
   },
   image: {
     type: String,

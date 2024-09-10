@@ -47,7 +47,7 @@ const Home = () => {
                   src={item.image}
                   alt="banner"
                 />
-                <figcaption className="absolute top-1/2  text-action-color font-bold hover:text-xl">
+                <figcaption className="absolute top-1/2  text-filter-color font-bold hover:text-xl">
                   {item.name}
                 </figcaption>
               </figure>

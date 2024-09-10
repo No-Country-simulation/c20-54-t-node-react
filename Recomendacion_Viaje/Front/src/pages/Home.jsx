@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import banner from "../assets/banner1.jpg";
 import filter1 from "../assets/packetFilter.jpg";
 import filter2 from "../assets/hotelFilter.jpg";
@@ -8,6 +8,7 @@ import { getPackageByPrice } from "../services/PackageServices";
 
 const Home = () => {
   const cards = [1, 2, 3, 4, 5, 6, 8, 9, 7];
+  const [packages, setPackages] = useState(null);
   const categories = [
     { name: "Alojamiento", image: filter2 },
     { name: "Transporte", image: filter3 },
@@ -18,6 +19,7 @@ const Home = () => {
     getPackageByPrice("220")
       .then((response) => {
         console.log("response", response);
+        setPackages(response);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -38,10 +40,11 @@ const Home = () => {
       <section className="flex w-full my-4 justify-center">
         <div className="flex w-2/3 ">
           {categories?.map((item, index) => (
-            <div key={`item-${index}`} className="w-1/3 flex justify-center items-center">
-              <figure
-                className=" relative flex justify-center  text-xl hover:text-2xl "
-              >
+            <div
+              key={`item-${index}`}
+              className="w-1/3 flex justify-center items-center"
+            >
+              <figure className=" relative flex justify-center  text-xl hover:text-2xl ">
                 <img
                   className="w-32 h-32 hover:w-36 hover:h-36 object-cover rounded-full  opacity-100"
                   src={item.image}
@@ -75,44 +78,87 @@ const Home = () => {
         </form>
       </section>
       {/* cards section */}
-      <section className="flex flex-wrap">
-        {cards?.map((item, index) => (
-          <div className="w-1/3 my-2 px-4">
-            <figure key={item} className="flex justify-center relative">
-              <img
-                className="w-full object-cover rounded-xl"
-                src={filter}
-                alt="banner"
-              />
+      <section className="flex flex-wrap mx-3">
+        {packages == null ? (
+          <p>Cargando...</p>
+        ) : packages.length == 0 ? (
+          <p>No hay paquetes</p>
+        ) : (
+          packages?.map((item, index) => (
+            <div key={item.id} className="w-1/3 my-2 px-4">
+              <figure className="flex justify-center relative">
+                <img
+                  className="w-full object-cover rounded-xl"
+                  src={filter}
+                  alt="banner"
+                />
 
-              <figcaption className="absolute inset-0 rounded-xl flex flex-col justify-center items-center w-full h-1/4 bg-bg-info top-2/3">
-                <div className="flex flex-row w-full p-2 border-primary-color">
-                  <div className="w-1/3 px-1">
-                    <h3 className="font-semibold  text-center">Ciudad</h3>
-                    <p className="italic text-center">VISAKHAPATNAM</p>
+                <figcaption className="absolute inset-0 rounded-xl flex flex-col justify-center items-center w-full h-1/4 bg-bg-info top-2/3">
+                  <div className="flex flex-row w-full p-2 border-primary-color">
+                    <div className="w-1/3 px-1">
+                      <h3 className="font-semibold  text-center">Ciudad</h3>
+                      <p className="italic text-center">{item.from}</p>
+                    </div>
+                    <div className="w-1/3 px-1">
+                      <h3 className="font-semibold text-center">Fechas</h3>
+                      <p className="italic text-center">16 jun - 20 jun</p>
+                    </div>
+                    <div className="w-1/3 px-1">
+                      <h3 className="font-semibold text-center">Precio</h3>
+                      <p className="italic text-center">${item.priceTotal}</p>
+                    </div>
                   </div>
-                  <div className="w-1/3 px-1">
-                    <h3 className="font-semibold text-center">Fechas</h3>
-                    <p className="italic text-center">16 jun - 20 jun</p>
-                  </div>
-                  <div className="w-1/3 px-1">
-                    <h3 className="font-semibold text-center">Precio</h3>
-                    <p className="italic text-center">$500 USD</p>
-                  </div>
-                </div>
-              </figcaption>
-            </figure>
-            <div className=" my-4 flex flex-col justify-center items-center">
-              <h2 className="w-full font-bold text-lg">Title</h2>
-              <button
-                type="button"
-                className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
-              >
-                Ver más información y reservar
-              </button>
+                </figcaption>
+              </figure>
+              <div className=" my-4 flex flex-col justify-center items-center">
+                <h2 className="w-full font-bold text-lg">Paquete México</h2>
+                <p className="my-2 w-full text-base line-clamp-2">{item.description.text}</p>
+                <button
+                  type="button"
+                  className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
+                >
+                  Ver más información y reservar
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+
+            // <div key={index} className="w-1/3 my-2 px-4">
+            //   <figure className="flex justify-center relative">
+            //     <img
+            //       className="w-full object-cover rounded-xl"
+            //       src={filter}
+            //       alt="banner"
+            //     />
+
+            //     <figcaption className="absolute inset-0 rounded-xl flex flex-col justify-center items-center w-full h-1/4 bg-bg-info top-2/3">
+            //       <div className="flex flex-row w-full p-2 border-primary-color">
+            //         <div className="w-1/3 px-1">
+            //           <h3 className="font-semibold  text-center">Ciudad</h3>
+            //           <p className="italic text-center">VISAKHAPATNAM</p>
+            //         </div>
+            //         <div className="w-1/3 px-1">
+            //           <h3 className="font-semibold text-center">Fechas</h3>
+            //           <p className="italic text-center">16 jun - 20 jun</p>
+            //         </div>
+            //         <div className="w-1/3 px-1">
+            //           <h3 className="font-semibold text-center">Precio</h3>
+            //           <p className="italic text-center">$500 USD</p>
+            //         </div>
+            //       </div>
+            //     </figcaption>
+            //   </figure>
+            //   <div className=" my-4 flex flex-col justify-center items-center">
+            //     <h2 className="w-full font-bold text-lg">Title</h2>
+            //     <button
+            //       type="button"
+            //       className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
+            //     >
+            //       Ver más información y reservar
+            //     </button>
+            //   </div>
+            // </div>
+          ))
+        )}
       </section>
       {/* opinions section */}
       <section>

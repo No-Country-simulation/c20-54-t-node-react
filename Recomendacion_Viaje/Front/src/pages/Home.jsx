@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import banner from "../assets/banner1.jpg";
 import filter1 from "../assets/packetFilter.jpg";
 import filter2 from "../assets/hotelFilter.jpg";
 import filter3 from "../assets/transportFilter.jpg";
 import filter from "../assets/banner2.jpg";
+import { getPackageByPrice } from "../services/PackageServices";
 
 const Home = () => {
   const cards = [1, 2, 3, 4, 5, 6, 8, 9, 7];
@@ -12,6 +13,15 @@ const Home = () => {
     { name: "Transporte", image: filter3 },
     { name: "Paquetes", image: filter1 },
   ];
+
+  useEffect(() => {
+    getPackageByPrice("220")
+      .then((response) => {
+        console.log("response", response);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
   return (
     <section className="w-full">
       {/* banner */}
@@ -28,9 +38,8 @@ const Home = () => {
       <section className="flex w-full my-4 justify-center">
         <div className="flex w-2/3 ">
           {categories?.map((item, index) => (
-            <div className="w-1/3 flex justify-center items-center">
+            <div key={`item-${index}`} className="w-1/3 flex justify-center items-center">
               <figure
-                key={`item-${index}`}
                 className=" relative flex justify-center  text-xl hover:text-2xl "
               >
                 <img

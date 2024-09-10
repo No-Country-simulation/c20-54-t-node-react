@@ -22,12 +22,10 @@ const packageSchema = new Schema({
   roomID: {
     type: Schema.Types.ObjectId,
     ref: 'Room',
-    required: true
   },
   meanID: {
     type: Schema.Types.ObjectId,
     ref: 'Mean',
-    required: true
   },
   rating: {
     type: Number,

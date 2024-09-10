@@ -8,11 +8,14 @@ const { carRouter } = require('./src/routers/car.router')
 // middleware
 const errorMiddleware = require('./src/middlewares/errorGlobal')
 
+const cors = require('cors')
 
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+app.use(cors())
 
 // create endpoints
 app.get("/", (req, res) => {

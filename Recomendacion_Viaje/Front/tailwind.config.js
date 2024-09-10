@@ -11,7 +11,7 @@ export default {
       "secondary-color": "#ffffff",
       "action-color":"#a4fff7",
       "bg-info": " rgba(218, 213, 210, 0.5)",
-      "bg-opinions":"rgba(218,213,210,0.2)"
+      "bg-opinions":"rgba(218,213,210,0.2)",
     },
     extend: {
       fontFamily: {

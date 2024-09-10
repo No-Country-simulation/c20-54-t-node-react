@@ -4,6 +4,7 @@ import filter1 from "../assets/packetFilter.jpg";
 import filter2 from "../assets/hotelFilter.jpg";
 import filter3 from "../assets/transportFilter.jpg";
 import filter from "../assets/banner2.jpg";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const cards = [1, 2, 3, 4, 5, 6, 8, 9, 7];
@@ -95,12 +96,14 @@ const Home = () => {
             </figure>
             <div className=" my-4 flex flex-col justify-center items-center">
               <h2 className="w-full font-bold text-lg">Title</h2>
-              <button
-                type="button"
-                className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
-              >
-                Ver más información y reservar
-              </button>
+              <Link to="/DetailsCard">
+                <button
+                  type="button"
+                  className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
+                >
+                  Ver más información y reservar
+                </button>
+              </Link>  
             </div>
           </div>
         ))}

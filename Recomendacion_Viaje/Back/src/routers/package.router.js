@@ -6,12 +6,15 @@ const router = express.Router();
 const {
   getPackages: getPackagesValidate
 } = require('../middlewares/expressValidator/package.middleware')
+const { auth } = require('../middlewares/auth.middleware');
+
 
 // controllers -> package
 const {
   getPackages,
   getPackageById,
-  getPackagesAll
+  getPackagesAll,
+  createCommentPackage
 } = require('../controllers/package.controller');
 const validate = require('../middlewares/validateExpress');
 
@@ -20,5 +23,6 @@ const validate = require('../middlewares/validateExpress');
 router.get('/', validate(getPackagesValidate), getPackages);
 router.get('/:id', getPackageById);
 router.get('/all', getPackagesAll);
+router.post('/comment', auth, createCommentPackage)
 
 module.exports = { packageRouter: router }

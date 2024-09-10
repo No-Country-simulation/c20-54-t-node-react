@@ -38,12 +38,9 @@ exports.getPackages = tryCatch(async (req, res, next) => {
     to: {
       $regex: to,
       $options: 'i'
-    },
-    category: {
-      $regex: catagory,
-      $options: 'i'
     }
   })
+    .select('-roomID -meanID')
     .limit(limit * 1)
     .skip((page - 1) * limit)
     .exec()

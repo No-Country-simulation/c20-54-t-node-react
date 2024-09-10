@@ -40,7 +40,10 @@ exports.getPackagesAll = tryCatch(async (req, res, next) => {
   const { limit = 8, page = 1, category = 'completed' } = req.query
 
   const packages = await Package.find({
-    status: category
+    category: {
+      $regex: category,
+      $options: 'i'
+    }
   })
     .limit(limit * 1)
     .skip((page - 1) * limit)

@@ -9,7 +9,8 @@ export default {
       // "primary-color": "#84B6F4",
       "primary-color": "#009929",
       "secondary-color": "#ffffff",
-      "action-color":"#a4fff7",
+      "action-color":"#2281ce",
+      "filter-color":"#a4fff7",
       "bg-info": " rgba(218, 213, 210, 0.5)",
       "bg-opinions":"rgba(218,213,210,0.2)"
     },

@@ -6,23 +6,6 @@ const Room = require('../db/models/Room')
 const AppError = require('../util/AppError')
 const tryCatch = require('../util/tryCatch')
 
-exports.getPackageByPrice = tryCatch(async (req, res, next) => {
-  const packages = await Package.find({
-    precioTotal: {
-      $lte: req.query.maxPrice
-    }
-  })
-
-  if (packages.length === 0) return res.status(404).json({
-    message: 'No packages found',
-    data: []
-  })
-
-  return res.status(200).json({
-    message: 'Packages found',
-    data: packages
-  })
-})
 
 exports.getPackages = tryCatch(async (req, res, next) => {
   const { price, from = '', to = '', catagory = "completed", limit = 8, page = 1 } = req.query

@@ -101,3 +101,29 @@ exports.getPackageById = tryCatch(async (req, res, next) => {
     }
   })
 })
+
+exports.createCommentPackage = tryCatch(async (req, res, next) => {
+  const { id } = req.params
+  const { comment, rating } = req.body
+
+  const package = await Package.findOne({
+    _id: id,
+    status: 'active'
+  })
+
+  if (!package) return next(new AppError('Package not found', 404))
+
+  package.comments.push({
+    userID: req.user.id,
+    content: comment,
+    rating,
+    date: new Date()
+  })
+
+  await package.save()
+
+  return res.status(200).json({
+    message: 'Comment added',
+    data: package
+  })
+})

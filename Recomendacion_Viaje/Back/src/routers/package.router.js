@@ -23,6 +23,6 @@ const validate = require('../middlewares/validateExpress');
 router.get('/', validate(getPackagesValidate), getPackages);
 router.get('/:id', getPackageById);
 router.get('/all', getPackagesAll);
-router.post('/comment', auth, createCommentPackage)
+router.post('/:id/comment', auth, createCommentPackage)
 
 module.exports = { packageRouter: router }

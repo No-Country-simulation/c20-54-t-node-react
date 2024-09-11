@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const tryCatch = require('../util/tryCatch');
 const AppError = require('../util/AppError');
 
+require('dotenv').config();
+
 exports.auth = tryCatch(async (req, res, next) => {
   let token;
 
@@ -22,4 +24,5 @@ exports.auth = tryCatch(async (req, res, next) => {
   });
 
   req.user = verified;
+  next();
 })

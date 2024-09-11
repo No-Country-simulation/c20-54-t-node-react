@@ -31,12 +31,20 @@ const meanSchema = new Schema({
     type: [Number],
     required: true
   },
-  to: {
+  title: {
     type: String,
     required: true
   },
-  from: {
+  cty: {
     type: String,
+    required: true
+  },
+  dateStart: {
+    type: Date,
+    required: true
+  },
+  dateEnd: {
+    type: Date,
     required: true
   },
   description: {

@@ -39,14 +39,6 @@ const meanSchema = new Schema({
     type: String,
     required: true
   },
-  dateStart: {
-    type: Date,
-    required: true
-  },
-  dateEnd: {
-    type: Date,
-    required: true
-  },
   description: {
     type: Object,
     default: {

@@ -63,13 +63,20 @@ const Booking = () => {
             <p className="font-bold text-primary-color">
               Completa los siguientes datos para realizar tu reserva
             </p>
+            <div className="bg-bg-info w-1\/2 bui-grid">
+              <aside className="py-2 px-4">
+                <div className="">
+                  <section className="">detalles de la reserva </section>
+                </div>
+              </aside>
+            </div>
           </div>
           <div className="reservation-form  bg-bg-info">
             <form onSubmit={handleSubmit}>
-              <div className="form-group ">
+              <div className="my-4  font-bold ">
                 <label htmlFor="firstName">Nombre:</label>
                 <input
-                  className="rounded-full"
+                  className="rounded-full flex text-sm w-full  py-2 px-4 md:me-0"
                   type="text"
                   id="firstName"
                   name="firstName"
@@ -79,10 +86,10 @@ const Booking = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="my-4 font-bold ">
                 <label htmlFor="lastName">Apellido:</label>
                 <input
-                  className="rounded-full"
+                  className="rounded-full flex text-sm w-full  py-2 px-4 md:me-0"
                   type="text"
                   id="lastName"
                   name="lastName"
@@ -92,10 +99,10 @@ const Booking = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="my-4 font-bold ">
                 <label htmlFor="dni">DNI:</label>
                 <input
-                  className="rounded-full"
+                  className="rounded-full flex text-sm w-full  py-2 px-4 md:me-0"
                   type="text"
                   id="dni"
                   name="dni"
@@ -105,10 +112,10 @@ const Booking = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="my-4 font-bold ">
                 <label htmlFor="email">Email:</label>
                 <input
-                  className="rounded-full"
+                  className="rounded-full flex text-sm w-full  py-2 px-4 md:me-0 "
                   type="email"
                   id="email"
                   name="email"
@@ -118,10 +125,12 @@ const Booking = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="birthDate">Fecha de Nacimiento:</label>
+              <div className=" my-4 ">
+                <label className="font-bold" htmlFor="birthDate">
+                  Fecha de Nacimiento:
+                </label>
                 <input
-                  className="rounded-full"
+                  className="rounded-full flex text-sm w-full py-2 px-4 md:me-0 "
                   type="date"
                   id="birthDate"
                   name="birthDate"
@@ -131,10 +140,10 @@ const Booking = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="my-4 font-bold ">
                 <label htmlFor="phone">Número de Teléfono:</label>
                 <input
-                  className="rounded-full"
+                  className="rounded-full flex text-sm w-full  py-2 px-4 md:me-0"
                   type="tel"
                   id="phone"
                   name="phone"

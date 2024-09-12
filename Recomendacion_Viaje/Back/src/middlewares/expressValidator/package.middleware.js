@@ -1,4 +1,4 @@
-const { body, query } = require('express-validator');
+const { body, query, param } = require('express-validator');
 
 exports.getPackages = [
   query('price').optional().isNumeric().withMessage('price must be a number value'),
@@ -8,3 +8,35 @@ exports.getPackages = [
   query('page').optional().isNumeric().withMessage('page must be a number value'),
   query('limit').optional().isNumeric().withMessage('limit must be a number value')
 ]
+
+
+//Validador de los request para crear un comentario
+//cuales son los request que se deben de enviar?
+/*
+{
+  "comment": "string",
+  "rating": "float"
+}
+*/
+
+exports.packageComents = [
+  param('id')
+    .notEmpty()
+    .withMessage('Id is required')
+    .isString()
+    .withMessage('Id must be a string'),
+  body('comment')
+    .notEmpty()
+    .withMessage('Comment cannot be empty')
+    .isString()
+    .withMessage('comment must be a string')
+    .isLength({ min: 10, max: 200 })
+    .withMessage('Comment must be between 10 and 200 characters'),
+  body('rating')
+    .notEmpty()
+    .withMessage('Rating is required')
+    .isNumeric()
+    .withMessage('Rating must be a float value')
+    .isFloat({ min: 1.0, max: 5.0 })
+    .withMessage('Rating must be between 1 and 5')
+] ;

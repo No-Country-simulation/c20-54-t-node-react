@@ -50,3 +50,4 @@ exports.registerUser = [
     .isString()
     .withMessage('Password must be a string')
 ]
+

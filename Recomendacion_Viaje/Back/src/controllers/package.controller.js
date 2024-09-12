@@ -10,6 +10,7 @@ const AppError = require('../util/AppError')
 const tryCatch = require('../util/tryCatch')
 
 
+/*
 exports.getPackages = tryCatch(async (req, res, next) => {
   const { price, from = '', to = '', catagory = "completed", limit = 8, page = 1 } = req.query
 
@@ -39,6 +40,48 @@ exports.getPackages = tryCatch(async (req, res, next) => {
 
 })
 
+*/
+
+
+// --------------Get packages by random price---------------------------------------------//
+
+const getRandomPrice = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+exports.getRandomPackages = tryCatch(async (req, res, next) => {
+  const { from = '', to = '', catagory = "completed", limit = 8, page = 1 } = req.query
+
+  // Generate a random price between 100 and 1000
+  const randomPrice = getRandomPrice(100, 1000);
+
+  const packages = await Package.find({
+    priceTotal: {
+      $lte: randomPrice
+    },
+    from: {
+      $regex: from,
+      $options: 'i'
+    },
+    to: {
+      $regex: to,
+      $options: 'i'
+    }
+  })
+    .select('-roomID -meanID')
+    .limit(limit * 1)
+
+  res.status(200).json({
+    status: 'success',
+    results: packages.length,
+    data: {
+      packages
+    }
+  });
+});
+
+
+//-------------------------------------------------------------------------------------------//
+
+/*
 exports.getPackagesAll = tryCatch(async (req, res, next) => {
   const { limit = 8, page = 1, category = 'completed' } = req.query
 
@@ -65,7 +108,7 @@ exports.getPackagesAll = tryCatch(async (req, res, next) => {
     total: packages.length
   })
 })
-
+*/
 exports.getPackageById = tryCatch(async (req, res, next) => {
   console.log('get package by id ', req.params.id)
   // obtener el paquete por id pero tambien obtenemos los datos de la referencia  meanID y roomID

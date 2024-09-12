@@ -11,7 +11,7 @@ const tryCatch = require('../util/tryCatch')
 
 
 exports.getPackages = tryCatch(async (req, res, next) => {
-  const { to = '', price = 0, catagory = "all", limit = 8, page = 1 } = req.query
+  const { to = '', price = 0, category = "all", limit = 8, page = 1 } = req.query
 
   console.log(' price ', price)
 
@@ -22,9 +22,9 @@ exports.getPackages = tryCatch(async (req, res, next) => {
       $lte: price
     }
   }
-  if (catagory) {
+  if (category) {
     query.category = {
-      $regex: catagory,
+      $regex: category,
       $options: 'i'
     }
   }
@@ -34,7 +34,7 @@ exports.getPackages = tryCatch(async (req, res, next) => {
       $options: 'i'
     }
   }
-  if (catagory === "all") {
+  if (category === "all") {
     delete query.category
   }
 

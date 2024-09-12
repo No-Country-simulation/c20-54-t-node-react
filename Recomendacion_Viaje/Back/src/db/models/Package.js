@@ -2,20 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const packageSchema = new Schema({
-  cateogry: {
+  category: {
     type: String,
-    enum: ['completed', 'hotel', 'restaurant'],
+    enum: ['completed', 'hosting', 'transport'],
     required: true
   },
-  from: {
-    type: String,
-    required: true
-  },
-  to: {
+  city: {
     type: String,
     required: true
   },
-  image: {
+  title: {
     type: String,
     required: true
   },
@@ -44,6 +40,10 @@ const packageSchema = new Schema({
     }
   },
   image: {
+    type: [String],
+    required: true
+  },
+  firstImage: {
     type: String,
     required: true
   },

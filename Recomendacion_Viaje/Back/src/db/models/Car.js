@@ -13,7 +13,11 @@ const carSchema = new Schema({
       default: 1
     }
   }],
-  total: {
+  priceTotal: {
+    type: Number,
+    default: 0
+  },
+  packageTotal: {
     type: Number,
     default: 0
   },

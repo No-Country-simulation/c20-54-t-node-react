@@ -9,7 +9,19 @@ const tryCatch = require('../util/tryCatch')
 exports.getCar = tryCatch(async (req, res, next) => {
   const car = await Car.findOne({ userID: req.user.id, status: 'pending' }).populate('items.packageID')
 
-  if (!car) return next(new AppError('Car not found', 404))
+  // if (!car) {
+  //   const newCar = await Car.create({
+  //     userID: req.user.id,
+  //     items: [],
+  //     total: 0,
+  //   })
+
+  //   return res.status(201).json({ status: 'success', data: newCar })
+  // }
+
+  if (!car) {
+    return res.status(200).json({ status: 'success', data: null })
+  }
 
   return res.status(200).json({ status: 'success', data: car })
 })

@@ -25,5 +25,7 @@ router.get('/', validate(getPackageBody), getPackages);
 router.get('/:id', getPackageById);
 //router.get('/all', getPackagesAll);
 router.post('/:id/comment', auth, validate(packageComents), createCommentPackage);
+// router para obtener comentario de un paquete por id
+router.get('/:id/comment', createCommentPackage);
 
 module.exports = { packageRouter: router }

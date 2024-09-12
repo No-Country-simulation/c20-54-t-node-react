@@ -16,6 +16,7 @@ exports.getPackages = tryCatch(async (req, res, next) => {
   console.log(' price ', price)
 
   const query = {}
+
   if (price) {
     query.priceTotal = {
       $lte: price
@@ -107,3 +108,5 @@ exports.createCommentPackage = tryCatch(async (req, res, next) => {
     data: package
   })
 })
+
+// crear controlador para obtener comentarios de un paquete por id

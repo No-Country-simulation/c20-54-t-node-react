@@ -31,11 +31,11 @@ const meanSchema = new Schema({
     type: [Number],
     required: true
   },
-  title: {
+  from: {
     type: String,
     required: true
   },
-  cty: {
+  to: {
     type: String,
     required: true
   },

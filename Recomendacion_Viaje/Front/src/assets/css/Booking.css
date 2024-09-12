@@ -38,21 +38,3 @@
     max-width: 400px;
   }
   
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .form-group input {
-    width: 100%;
-   
-    border: 1px solid #ccc;
-  }
-  
-

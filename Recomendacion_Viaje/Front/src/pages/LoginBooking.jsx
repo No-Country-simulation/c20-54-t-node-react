@@ -72,7 +72,7 @@ const LoginBooking = () => {
               <div className=" my-4 flex flex-col justify-center items-center font-bold">
                 <label htmlFor="email">Email:</label>
                 <input
-                  className="rounded-full"
+                  className="rounded-full flex text-sm  py-2 px-4 md:me-0 "
                   type="email"
                   id="email"
                   name="email"
@@ -85,7 +85,7 @@ const LoginBooking = () => {
               <div className=" my-4 flex flex-col justify-center items-center font-bold">
                 <label htmlFor="password">Contraseña:</label>
                 <input
-                  className="rounded-full"
+                  className="rounded-full flex text-sm  py-2 px-4 "
                   type="password"
                   id="password"
                   name="password"

@@ -30,23 +30,23 @@ exports.addPackageCar = tryCatch(async (req, res, next) => {
   const packageID = req.body.packageID
 
   const car = await Car.findOne({
-    user: req.user.id,
+    userID: req.user.id,
     status: 'pending'
   })
+
+  const findPackage = await Package.findOne({ _id: packageID })
+
+  if (!findPackage) return next(new AppError('Package not found', 404))
 
   if (!car) {
     const newCar = await Car.create({
       userID: req.user.id,
       items: [{ packageID, quantity: 1 }],
-      total: 0,
+      total: findPackage.priceTotal,
     })
 
     return res.status(201).json({ status: 'success', data: newCar })
   }
-
-  const findPackage = await Package.findOne({ _id: packageID })
-
-  if (!findPackage) return next(new AppError('Package not found', 404))
 
   await car.updateOne({ $push: { items: { packageID, quantity: 1 } }, total: car.total + findPackage.priceTotal })
 

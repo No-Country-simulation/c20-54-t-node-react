@@ -10,105 +10,56 @@ const AppError = require('../util/AppError')
 const tryCatch = require('../util/tryCatch')
 
 
-/*
 exports.getPackages = tryCatch(async (req, res, next) => {
-  const { price, from = '', to = '', catagory = "completed", limit = 8, page = 1 } = req.query
+  const { to = '', price = 0, catagory = "all", limit = 8, page = 1 } = req.query
 
-  const packages = await Package.find({
-    priceTotal: {
+  console.log(' price ', price)
+
+  const query = {}
+  if (price) {
+    query.priceTotal = {
       $lte: price
-    },
-    from: {
-      $regex: from,
+    }
+  }
+  if (catagory) {
+    query.category = {
+      $regex: catagory,
       $options: 'i'
-    },
-    to: {
+    }
+  }
+  if (to) {
+    query.to = {
       $regex: to,
       $options: 'i'
     }
-  })
-    .select('-roomID -meanID')
+  }
+  if (catagory === "all") {
+    delete query.category
+  }
+
+  const packages = await Package.find(query)
     .limit(limit * 1)
-    .skip((page - 1) * limit)
+    .skip((+page - 1) * limit)
     .exec()
 
+  const totalDocPackage = await Package.countDocuments(query)
+  const totalPages = Math.ceil(totalDocPackage / limit)
+  const hasNextPage = +page < totalPages
+  const hasPrevPage = +page > 1
 
   return res.status(200).json({
-    message: 'Packages found',
-    data: packages
-  })
-
-})
-
-*/
-
-
-// --------------Get packages by random price---------------------------------------------//
-
-const getRandomPrice = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-exports.getRandomPackages = tryCatch(async (req, res, next) => {
-  const { from = '', to = '', catagory = "completed", limit = 8, page = 1 } = req.query
-
-  // Generate a random price between 100 and 1000
-  const randomPrice = getRandomPrice(100, 1000);
-
-  const packages = await Package.find({
-    priceTotal: {
-      $lte: randomPrice
-    },
-    from: {
-      $regex: from,
-      $options: 'i'
-    },
-    to: {
-      $regex: to,
-      $options: 'i'
-    }
-  })
-    .select('-roomID -meanID')
-    .limit(limit * 1)
-
-  res.status(200).json({
     status: 'success',
     results: packages.length,
+    page: page,
+    nextPage: hasNextPage ? +page + 1 : null,
+    prevPage: hasPrevPage ? +page - 1 : null,
+    totalPages: totalPages,
     data: {
       packages
     }
   });
 });
 
-
-//-------------------------------------------------------------------------------------------//
-
-/*
-exports.getPackagesAll = tryCatch(async (req, res, next) => {
-  const { limit = 8, page = 1, category = 'completed' } = req.query
-
-  const packages = await Package.find({
-    category: {
-      $regex: category,
-      $options: 'i'
-    }
-  })
-    .limit(limit * 1)
-    .skip((page - 1) * limit)
-    .exec()
-
-  if (packages.length === 0) return res.status(404).json({
-    message: 'No packages found',
-    data: []
-  })
-
-  return res.status(200).json({
-    message: 'Packages found',
-    data: packages,
-    page: page,
-    limit: limit,
-    total: packages.length
-  })
-})
-*/
 exports.getPackageById = tryCatch(async (req, res, next) => {
   console.log('get package by id ', req.params.id)
   // obtener el paquete por id pero tambien obtenemos los datos de la referencia  meanID y roomID

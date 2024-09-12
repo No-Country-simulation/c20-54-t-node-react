@@ -24,8 +24,8 @@ const NavBar = () => {
   return (
     <header>
       <nav className="flex justify-around items-center py-2.5 px-3 bg-secondary-color text-primary-color">
-        <div className="text-2xl font-bold">VIAJES</div>
-        <ul className={`list-none flex m-0 p-0`}>
+        <div className="logo text-2xl font-bold">VIAJES</div>
+        <ul className="list-none flex m-0 p-0 nav-links ">
           <li className='mr-2.5'><Link to={`/`} className='text-primary-color text-base transition-colors duration-300 hover:text-action-color' >Home</Link></li>
           <li className='mr-2.5'><Link to={`/`} className='text-primary-color text-base transition-colors duration-300 hover:text-action-color' >Reservar</Link></li>
           <li className='mr-2.5'><Link to={`/`} className='text-primary-color text-base transition-colors duration-300 hover:text-action-color' >Contacto</Link></li>

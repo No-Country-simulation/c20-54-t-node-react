@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import banner from "../assets/banner1.jpg";
 import filter1 from "../assets/packetFilter.jpg";
 import filter2 from "../assets/hotelFilter.jpg";
@@ -9,22 +9,45 @@ import { getPackageByPrice } from "../services/PackageServices";
 const Home = () => {
   const cards = [1, 2, 3, 4, 5, 6, 8, 9, 7];
   const [packages, setPackages] = useState(null);
+  const budgetRef = useRef(null);
+  const [budget, setBudget] = useState(null);
+  // const [temporalBudget, setTemporalBudget] = useState(null);
+  const [modalActive, setModalActive] = useState(true);
   const categories = [
     { name: "Alojamiento", image: filter2 },
     { name: "Transporte", image: filter3 },
     { name: "Paquetes", image: filter1 },
   ];
+  
+
+  // useEffect(()=>{
+  //   setBudget(localStorage.getItem("budget"))
+  // },[])
 
   useEffect(() => {
-    getPackageByPrice("220")
-      .then((response) => {
-        console.log("response", response);
-        setPackages(response);
-      })
-      .catch((e) => console.log(e));
-  }, []);
+    console.log("budget",budget)
+    if(budget != null){
+      getPackageByPrice(budget)
+        .then((response) => {
+          console.log("response", response);
+          setPackages(response);
+        })
+        .catch((e) => console.log(e))
+    }
+  }, [budget]);
+
+  const getBudget = (e) =>{
+      e.preventDefault();
+      const budget=budgetRef.current.value;
+      if (budget>0){
+        setBudget(budget)
+        setModalActive(false)
+      }
+    }
+  
 
   return (
+    <div className="relative secondary-color">
     <section className="w-full">
       {/* banner */}
       <figure className="mt-4 relative h-80">
@@ -59,15 +82,13 @@ const Home = () => {
         </div>
       </section>
       {/* sort filter */}
-      <section className="flex w-full mb-4">
-        <form className="max-w-sm mx-auto">
-          <label
-            htmlFor="sort"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          ></label>
+      <section className="flex w-full mt-6 mb-4 justify-center">
+        <div className="w-2/5 flex">
+        <button onClick={()=>setModalActive(true)} className="w-1/2 mx-4 bg-primary-color text-base text-secondary-color font-bold py-2 px-4 rounded-full hover:bg-action-color">Cambiar el presupuesto</button>
+        <form className="w-1/2 mx-4">
           <select
             id="sort"
-            className="h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="border border-primary-color text-base rounded-lg focus:ring-2 focus:border-primary-color focus:ring-primary-color active:ring-primary-color py-2 px-4"
           >
             <option>Ordenar por:</option>
             <option value="lowPrice">Precio: menor a mayor</option>
@@ -76,6 +97,7 @@ const Home = () => {
             <option value="highScore">Puntuación: mayor a menor</option>
           </select>
         </form>
+        </div>
       </section>
       {/* cards section */}
       <section className="flex flex-wrap mx-3">
@@ -206,6 +228,31 @@ const Home = () => {
         </figure>
       </section>
     </section>
+    {modalActive ? (
+        <div className=" fixed top-0 right-0 flex justify-center items-center bg-modal w-screen h-screen">
+          <form onSubmit={getBudget} className="flex flex-col justify-center items-center bg-secondary-color w-1/3 p-4 rounded-xl shadow-[0px_0px_35px_4px_rgba(34,129,206,1)]">
+            <label
+              htmlFor="budget"
+              className="my-2 font-bold text-primary-color font-title text-xl"
+            >
+              Ingrese el presupuesto para su viaje
+            </label>
+            <input
+              id="budget"
+              type="number"
+              className="my-2 py-1 px-4 bg-secondary-color border border-action-color w-3/4 rounded-xl focus:outline-none focus:ring-2 focus:ring-action-color"
+              ref={budgetRef}
+            />
+            <button
+              type="submit"
+              className="flex text-sm mt-3 mb-2 bg-action-color text-secondary-color font-bold py-2 px-4 rounded-full hover:bg-primary-color"
+            >
+              Explorar paquetes
+            </button>
+          </form>
+        </div>
+      ) : null}
+    </div>
   );
 };
 

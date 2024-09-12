@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
-  return (
+  return  location.pathname === "/booking" ? null : (
     <footer className="my-4 bg-secondary-color border-primary-color">
       <div className="w-full py-4">
         <Link

@@ -39,4 +39,4 @@ exports.packageComents = [
     .withMessage('Rating must be a float value')
     .isFloat({ min: 1.0, max: 5.0 })
     .withMessage('Rating must be between 1 and 5')
-] ;
+];

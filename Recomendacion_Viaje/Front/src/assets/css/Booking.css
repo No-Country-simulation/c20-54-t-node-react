@@ -1,0 +1,58 @@
+/* Contenedor principal */
+.reservation-container {
+    display: flex;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+    background: url('../pexels-photo-3922921.jpeg') no-repeat center center;
+    background-size: cover;
+    padding: 0 10%;
+  }
+
+  /* Contenido del formulario */
+  .reservation-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .reservation-banner {
+    flex: 1;
+    text-align: center;
+    padding: 30px;
+  }
+  .reservation-banner h1{
+    font-size: 3rem;
+  }
+  .reservation-banner p{
+    font-size: 1.5rem;
+  }
+  
+  .reservation-form {
+    flex: 1;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+    max-width: 400px;
+  }
+  
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    width: 100%;
+   
+    border: 1px solid #ccc;
+  }
+  
+

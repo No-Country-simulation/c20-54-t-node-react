@@ -18,7 +18,7 @@ const carSchema = new Schema({
     default: 0
   },
   status: {
-    type: String, enum: ['pending', 'paid', 'shipped', 'delivered'],
+    type: String, enum: ['pending', 'reserved', 'cancelled'],
     default: 'pending'
   }
 });

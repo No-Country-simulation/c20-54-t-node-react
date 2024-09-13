@@ -36,6 +36,8 @@ exports.registerUser = [
     .notEmpty()
     .withMessage('Gender is required')
     .isString()
+    .withMessage('Gender must be a string')
+    .isAlphanumeric()
     .withMessage('Gender must be a string'),
   body('email')
     .notEmpty()

@@ -24,7 +24,7 @@ const Layout = () => {
   // };
   
   return (
-    <div className="relative bg-secondary-color">
+    <div className="relative bg-secondary-color font-body">
       <NavBar />
       <Outlet />
       <Footer />

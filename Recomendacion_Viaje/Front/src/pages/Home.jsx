@@ -3,25 +3,20 @@ import banner from "../assets/banner1.jpg";
 import filter1 from "../assets/packetFilter.jpg";
 import filter2 from "../assets/hotelFilter.jpg";
 import filter3 from "../assets/transportFilter.jpg";
-import filter from "../assets/banner2.jpg";
+import { format } from "date-fns";
 import { getPackageByPrice } from "../services/PackageServices";
 
 const Home = () => {
-  const cards = [1, 2, 3, 4, 5, 6, 8, 9, 7];
   const [packages, setPackages] = useState(null);
   const budgetRef = useRef(null);
   const [budget, setBudget] = useState(null);
-  // const [temporalBudget, setTemporalBudget] = useState(null);
   const [modalActive, setModalActive] = useState(true);
+
   const categories = [
     { name: "Alojamiento", image: filter2 },
     { name: "Transporte", image: filter3 },
     { name: "Paquetes", image: filter1 },
   ];
-
-  // useEffect(()=>{
-  //   setBudget(localStorage.getItem("budget"))
-  // },[])
 
   useEffect(() => {
     console.log("budget", budget);
@@ -29,7 +24,7 @@ const Home = () => {
       getPackageByPrice(budget)
         .then((response) => {
           console.log("response", response);
-          setPackages(response);
+          setPackages(response.data.packages);
         })
         .catch((e) => console.log(e));
     }
@@ -48,7 +43,7 @@ const Home = () => {
     <div className="relative secondary-color">
       <section className="w-full">
         {/* banner */}
-        <figure className="mt-4 relative h-80">
+        <figure className="relative h-80">
           <img
             className="w-full h-full object-cover"
             src={banner}
@@ -117,11 +112,11 @@ const Home = () => {
             <p>No hay paquetes</p>
           ) : (
             packages?.map((item, index) => (
-              <div key={item.id} className="w-1/3 my-2 px-4">
+              <div key={item._id} className="w-1/3 my-2 px-4">
                 <figure className="flex justify-center relative">
                   <img
-                    className="w-full object-cover rounded-xl"
-                    src={filter}
+                    className="w-full h-60 object-cover rounded-xl"
+                    src={item.firstImage}
                     alt="banner"
                   />
 
@@ -129,11 +124,11 @@ const Home = () => {
                     <div className="flex flex-row w-full p-2 border-primary-color">
                       <div className="w-1/3 px-1">
                         <h3 className="font-semibold  text-center">Ciudad</h3>
-                        <p className="italic text-center">{item.from}</p>
+                        <p className="italic text-center">{item.city}</p>
                       </div>
                       <div className="w-1/3 px-1">
                         <h3 className="font-semibold text-center">Fechas</h3>
-                        <p className="italic text-center">16 jun - 20 jun</p>
+                        <p className="italic text-center">{format(new Date (item.dateStart),"dd MMM")} - {format(new Date (item.dateEnd),"dd MMM")}</p>
                       </div>
                       <div className="w-1/3 px-1">
                         <h3 className="font-semibold text-center">Precio</h3>
@@ -143,54 +138,18 @@ const Home = () => {
                   </figcaption>
                 </figure>
                 <div className=" my-4 flex flex-col justify-center items-center">
-                  <h2 className="w-full font-bold text-lg">Paquete México</h2>
-                  <p className="my-2 w-full text-base line-clamp-2">
-                    {item.description.text}
+                  <h2 className="w-full font-bold text-lg font-title">{item.title}</h2>
+                  <p className="mt-1 w-full text-base line-clamp-2">
+                    {item.description.content}
                   </p>
                   <button
                     type="button"
-                    className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
+                    className="mt-3 flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
                   >
                     Ver más información y reservar
                   </button>
                 </div>
               </div>
-
-              // <div key={index} className="w-1/3 my-2 px-4">
-              //   <figure className="flex justify-center relative">
-              //     <img
-              //       className="w-full object-cover rounded-xl"
-              //       src={filter}
-              //       alt="banner"
-              //     />
-
-              //     <figcaption className="absolute inset-0 rounded-xl flex flex-col justify-center items-center w-full h-1/4 bg-bg-info top-2/3">
-              //       <div className="flex flex-row w-full p-2 border-primary-color">
-              //         <div className="w-1/3 px-1">
-              //           <h3 className="font-semibold  text-center">Ciudad</h3>
-              //           <p className="italic text-center">VISAKHAPATNAM</p>
-              //         </div>
-              //         <div className="w-1/3 px-1">
-              //           <h3 className="font-semibold text-center">Fechas</h3>
-              //           <p className="italic text-center">16 jun - 20 jun</p>
-              //         </div>
-              //         <div className="w-1/3 px-1">
-              //           <h3 className="font-semibold text-center">Precio</h3>
-              //           <p className="italic text-center">$500 USD</p>
-              //         </div>
-              //       </div>
-              //     </figcaption>
-              //   </figure>
-              //   <div className=" my-4 flex flex-col justify-center items-center">
-              //     <h2 className="w-full font-bold text-lg">Title</h2>
-              //     <button
-              //       type="button"
-              //       className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
-              //     >
-              //       Ver más información y reservar
-              //     </button>
-              //   </div>
-              // </div>
             ))
           )}
         </section>
@@ -257,6 +216,7 @@ const Home = () => {
               type="number"
               className="my-2 py-1 px-4 bg-secondary-color border border-action-color w-3/4 rounded-xl focus:outline-none focus:ring-2 focus:ring-action-color"
               ref={budgetRef}
+              placeholder={budget}
             />
             <button
               type="submit"

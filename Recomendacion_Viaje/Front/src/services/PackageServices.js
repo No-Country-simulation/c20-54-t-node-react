@@ -8,7 +8,7 @@ export const getPackageByPrice = async(price) =>{
                 price:price
             }
         });
-        return data.data
+        return data
     } catch (error) {
         console.log(error)
         return []

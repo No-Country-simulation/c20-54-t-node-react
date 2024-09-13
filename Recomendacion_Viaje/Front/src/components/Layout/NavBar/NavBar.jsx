@@ -70,7 +70,7 @@ const NavBar = () => {
             </button>
           ) : (
             <button
-              onClick={() => navigate(`/booking`)}
+              onClick={() => navigate(`/login`)}
               type="button"
               className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full"
             >

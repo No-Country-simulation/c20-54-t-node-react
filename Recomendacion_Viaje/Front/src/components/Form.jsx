@@ -1,5 +1,7 @@
-const Form = () =>{
+import { useNavigate } from "react-router-dom"
 
+const Form = () =>{
+    const navigate = useNavigate();
     return(
         <form className="w-full max-w-sm rounded overflow-hidden shadow-lg ml-6 p-4 h-1/3   " >
             <h2 className="mb-4 ml-14 font-bold text-xl">Reserva</h2>
@@ -50,7 +52,9 @@ const Form = () =>{
             <div className="ml-20"  >
                 
                 <div>
-                <button className=" bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-md m-4 mt-4 h-10 " type="buttton">
+                <button
+                onClick={()=>navigate(`/booking`)}
+                 className=" bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-md m-4 mt-4 h-10 " type="buttton">
                     Confirmar Reserva
                 </button>
                 </div>               

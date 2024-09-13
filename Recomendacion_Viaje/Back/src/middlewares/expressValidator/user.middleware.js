@@ -31,7 +31,9 @@ exports.registerUser = [
     .withMessage('Last Name must be a string'),
   body('dateBirth')
     .notEmpty()
-    .withMessage('Date of Birth is required'),
+    .withMessage('Date of Birth is required')
+    .isDate()
+    .withMessage('Date of Birth must be a valid date'),
   body('idAt')
     .notEmpty()
     .withMessage('Gender is required')

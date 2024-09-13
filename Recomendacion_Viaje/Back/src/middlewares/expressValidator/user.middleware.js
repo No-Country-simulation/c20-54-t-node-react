@@ -32,7 +32,7 @@ exports.registerUser = [
   body('dateBirth')
     .notEmpty()
     .withMessage('Date of Birth is required')
-    .isDate({ format: 'YYYY-MM-DD' })
+    .isDate({ format: 'DD-MM-YYYY' })
     .withMessage('Date of Birth must be a valid date'),
   body('idAt')
     .notEmpty()

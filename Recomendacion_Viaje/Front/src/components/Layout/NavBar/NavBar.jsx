@@ -28,7 +28,7 @@ const NavBar = () => {
         <ul className="list-none flex m-0 p-0 nav-links ">
           <li className='mr-2.5'><Link to={`/`} className='text-primary-color text-base transition-colors duration-300 hover:text-action-color hover:font-bold' >Home</Link></li>
           <li className='mr-2.5'><Link to={`/booking`} className='text-primary-color text-base transition-colors duration-300 hover:text-action-color hover:font-bold' >Reservar</Link></li>
-          <li className='mr-2.5'><Link to={`/`} className='text-primary-color text-base transition-colors duration-300 hover:text-action-color hover:font-bold' >Contacto</Link></li>
+          <li className='mr-2.5'><a href='#contact' className='text-primary-color text-base transition-colors duration-300 hover:text-action-color hover:font-bold' >Contacto</a></li>
           {/* <li className='mr-2.5'><a href="#servicios">Paquetes</a></li> */}
         </ul>
       </nav>

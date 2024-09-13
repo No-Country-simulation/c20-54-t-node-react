@@ -1,18 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import banner from "../assets/banner1.jpg";
+import filter from "../assets/banner2.jpg";
 import filter1 from "../assets/packetFilter.jpg";
 import filter2 from "../assets/hotelFilter.jpg";
 import filter3 from "../assets/transportFilter.jpg";
+
 import { format } from "date-fns";
-import { getPackageByPrice } from "../services/PackageServices";
+import {
+  getPackageByCategoryAndPrice,
+  getPackageByPrice,
+} from "../services/PackageServices";
 
 const Home = () => {
   const [packages, setPackages] = useState(null);
   const budgetRef = useRef(null);
   const [budget, setBudget] = useState(null);
   const [modalActive, setModalActive] = useState(true);
+  const [filterActive, setFilterActive] = useState(1);
 
   const categories = [
+    { name: "Todos", image: filter },
     { name: "Alojamiento", image: filter2 },
     { name: "Transporte", image: filter3 },
     { name: "Paquetes", image: filter1 },
@@ -21,14 +28,45 @@ const Home = () => {
   useEffect(() => {
     console.log("budget", budget);
     if (budget != null) {
-      getPackageByPrice(budget)
-        .then((response) => {
-          console.log("response", response);
-          setPackages(response.data.packages);
-        })
-        .catch((e) => console.log(e));
+      switch (filterActive) {
+        case 0:
+          getPackageByPrice(budget)
+            .then((response) => {
+              console.log("response all", response);
+              setPackages(response.data.packages);
+            })
+            .catch((e) => console.log(e));
+          break;
+        case 1:
+          getPackageByCategoryAndPrice("hosting", budget)
+            .then((response) => {
+              console.log("response hosting", response);
+              setPackages(response.data.packages);
+            })
+            .catch((e) => console.log(e));
+          break;
+        case 2:
+          getPackageByCategoryAndPrice("transport", budget)
+            .then((response) => {
+              console.log("response transport", response);
+              setPackages(response.data.packages);
+            })
+            .catch((e) => console.log(e));
+          break;
+        case 3:
+          getPackageByCategoryAndPrice("completed", budget)
+            .then((response) => {
+              console.log("response completed", response);
+              setPackages(response.data.packages);
+            })
+            .catch((e) => console.log(e));
+          break;
+
+        default:
+          break;
+      }
     }
-  }, [budget]);
+  }, [budget, filterActive]);
 
   const getBudget = (e) => {
     e.preventDefault();
@@ -62,21 +100,22 @@ const Home = () => {
             {categories?.map((item, index) => (
               <div
                 key={`item-${index}`}
-                className="w-1/3 flex justify-center items-center"
+                className="w-1/4 flex justify-center items-center"
               >
-                <figure className="relative  flex justify-center w-32 h-32 hover:scale-110 transition-transform duration-300">
-                  
+                <button onClick={() => setFilterActive(index)} >
+                  <figure className="relative  flex justify-center w-32 h-32 hover:scale-110 transition-transform duration-300">
                     <img
                       className=" relative object-cover rounded-full"
                       src={item.image}
                       alt="banner"
                     />
                     <div className="absolute bg-modal rounded-full hover:opacity-60"></div>
-                  
-                  <figcaption className="absolute top-1/2  text-secondary-color font-bold text-xl">
-                    {item.name}
-                  </figcaption>
-                </figure>
+
+                    <figcaption className="absolute top-1/2  text-secondary-color font-bold text-xl">
+                      {item.name}
+                    </figcaption>
+                  </figure>
+                </button>
               </div>
             ))}
           </div>
@@ -128,7 +167,10 @@ const Home = () => {
                       </div>
                       <div className="w-1/3 px-1">
                         <h3 className="font-semibold text-center">Fechas</h3>
-                        <p className="italic text-center">{format(new Date (item.dateStart),"dd MMM")} - {format(new Date (item.dateEnd),"dd MMM")}</p>
+                        <p className="italic text-center">
+                          {format(new Date(item.dateStart), "dd MMM")} -{" "}
+                          {format(new Date(item.dateEnd), "dd MMM")}
+                        </p>
                       </div>
                       <div className="w-1/3 px-1">
                         <h3 className="font-semibold text-center">Precio</h3>
@@ -138,7 +180,9 @@ const Home = () => {
                   </figcaption>
                 </figure>
                 <div className=" my-4 flex flex-col justify-center items-center">
-                  <h2 className="w-full font-bold text-lg font-title">{item.title}</h2>
+                  <h2 className="w-full font-bold text-lg font-title">
+                    {item.title}
+                  </h2>
                   <p className="mt-1 w-full text-base line-clamp-2">
                     {item.description.content}
                   </p>

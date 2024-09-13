@@ -4,6 +4,7 @@ import filter from "../assets/banner2.jpg";
 import filter1 from "../assets/packetFilter.jpg";
 import filter2 from "../assets/hotelFilter.jpg";
 import filter3 from "../assets/transportFilter.jpg";
+import { useNavigate } from "react-router-dom";
 
 import { format } from "date-fns";
 import {
@@ -16,10 +17,17 @@ const Home = () => {
   const budgetRef = useRef(null);
   const [budget, setBudget] = useState(null);
   const [modalActive, setModalActive] = useState(true);
-  const [filterActive, setFilterActive] = useState(1);
+  const [filterActive, setFilterActive] = useState(0);
+  const [sort, setSort] = useState(null);
+
+  const navigate = useNavigate();
 
   const categories = [
-    { name: "Todos", image: filter },
+    {
+      name: "Todos",
+      image:
+        "https://res.cloudinary.com/dwvdzy8xq/image/upload/v1726242993/Proyecto%20Agencia/hiker-1607078_1280_i6uc30.jpg",
+    },
     { name: "Alojamiento", image: filter2 },
     { name: "Transporte", image: filter3 },
     { name: "Paquetes", image: filter1 },
@@ -33,7 +41,7 @@ const Home = () => {
           getPackageByPrice(budget)
             .then((response) => {
               console.log("response all", response);
-              setPackages(response.data.packages);
+              setPackages(response);
             })
             .catch((e) => console.log(e));
           break;
@@ -41,7 +49,7 @@ const Home = () => {
           getPackageByCategoryAndPrice("hosting", budget)
             .then((response) => {
               console.log("response hosting", response);
-              setPackages(response.data.packages);
+              setPackages(response);
             })
             .catch((e) => console.log(e));
           break;
@@ -49,7 +57,7 @@ const Home = () => {
           getPackageByCategoryAndPrice("transport", budget)
             .then((response) => {
               console.log("response transport", response);
-              setPackages(response.data.packages);
+              setPackages(response);
             })
             .catch((e) => console.log(e));
           break;
@@ -57,7 +65,7 @@ const Home = () => {
           getPackageByCategoryAndPrice("completed", budget)
             .then((response) => {
               console.log("response completed", response);
-              setPackages(response.data.packages);
+              setPackages(response);
             })
             .catch((e) => console.log(e));
           break;
@@ -76,6 +84,24 @@ const Home = () => {
       setModalActive(false);
     }
   };
+
+  const handleSort = (e) => {
+    setSort(e.target.value);
+  };
+
+  useEffect(() => {
+    if (sort != null) {
+      switch (sort) {
+        case "lowPrice":
+          break;
+        case "highPrice":
+          break;
+
+        default:
+          break;
+      }
+    }
+  }, [packages, sort]);
 
   return (
     <div className="relative secondary-color">
@@ -102,8 +128,14 @@ const Home = () => {
                 key={`item-${index}`}
                 className="w-1/4 flex justify-center items-center"
               >
-                <button onClick={() => setFilterActive(index)} >
-                  <figure className="relative  flex justify-center w-32 h-32 hover:scale-110 transition-transform duration-300">
+                <button onClick={() => setFilterActive(index)}>
+                  <figure
+                    className={`relative  flex justify-center w-32 h-32 hover:scale-110 transition-transform duration-300  ${
+                      filterActive == index
+                        ? "border-2 border-primary-color rounded-full"
+                        : ""
+                    }`}
+                  >
                     <img
                       className=" relative object-cover rounded-full"
                       src={item.image}
@@ -133,6 +165,7 @@ const Home = () => {
               <select
                 id="sort"
                 className="border border-primary-color text-base rounded-lg focus:ring-2 focus:border-primary-color focus:ring-primary-color active:ring-primary-color py-2 px-4"
+                onChange={handleSort}
               >
                 <option>Ordenar por:</option>
                 <option value="lowPrice">Precio: menor a mayor</option>
@@ -145,12 +178,12 @@ const Home = () => {
         </section>
         {/* cards section */}
         <section className="flex flex-wrap mx-3">
-          {packages == null ? (
+          {packages?.data.packages == null ? (
             <p>Cargando...</p>
-          ) : packages.length == 0 ? (
+          ) : packages?.data.packages.length == 0 ? (
             <p>No hay paquetes</p>
           ) : (
-            packages?.map((item, index) => (
+            packages?.data.packages.map((item) => (
               <div key={item._id} className="w-1/3 my-2 px-4">
                 <figure className="flex justify-center relative">
                   <img
@@ -187,6 +220,7 @@ const Home = () => {
                     {item.description.content}
                   </p>
                   <button
+                  onClick={()=>navigate(`/details/${item._id}`)}
                     type="button"
                     className="mt-3 flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
                   >
@@ -197,6 +231,62 @@ const Home = () => {
             ))
           )}
         </section>
+        {/* pagination */}
+        <div className="w-full flex justify-center items-center">
+          <nav>
+            <ul className="flex items-center -space-x-px h-10 text-base">
+              <li>
+                <a className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-primary-color bg-secondary-color border border-e-0 border-primary-color rounded-s-lg hover:font-bold hover:text-secondary-color hover:bg-primary-color active:text-secondary-color active:bg-primary-color">
+                  <span className="sr-only">Previous</span>
+                  <svg
+                    className="w-3 h-3 rtl:rotate-180"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 1 1 5l4 4"
+                    />
+                  </svg>
+                </a>
+              </li>
+              {packages
+                ? [...Array(packages.totalPages)].map((item, index) => (
+                    <li key={`pag-${index}`}>
+                      <a className="flex items-center justify-center px-4 h-10 leading-tight text-primary-color bg-secondary-color border border-primary-color hover:font-bold hover:text-secondary-color hover:bg-primary-color active:text-secondary-color active:bg-primary-color">
+                        1
+                      </a>
+                    </li>
+                  ))
+                : null}
+              <li>
+                <a className="flex items-center justify-center px-4 h-10 leading-tight text-primary-color bg-secondary-color border border-primary-color rounded-e-lg hover:font-bold hover:text-secondary-color hover:bg-primary-color active:text-secondary-color active:bg-primary-color ">
+                  <span className="sr-only">Next</span>
+                  <svg
+                    className="w-3 h-3 rtl:rotate-180"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 6 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 9 4-4-4-4"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
         {/* opinions section */}
         <section>
           <figure className="mt-4 relative h-80">

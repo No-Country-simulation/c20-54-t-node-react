@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const location = useLocation();
   return  location.pathname === "/booking" ? null : (
     <footer id="contact" className="pt-2 pb-3 bg-secondary-color  border-primary-color">
       <div className="w-full ">

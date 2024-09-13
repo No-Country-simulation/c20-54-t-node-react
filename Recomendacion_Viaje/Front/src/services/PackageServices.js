@@ -8,7 +8,22 @@ export const getPackageByPrice = async(price) =>{
                 price:price
             }
         });
-        return data.data
+        return data
+    } catch (error) {
+        console.log(error)
+        return []
+    }
+}
+
+export const getPackageByCategoryAndPrice = async(category,price) =>{
+    try {
+        const { data } = await axios.get(endpoints.getPackages,{
+            params:{
+                category:category,
+                price:price
+            }
+        });
+        return data
     } catch (error) {
         console.log(error)
         return []

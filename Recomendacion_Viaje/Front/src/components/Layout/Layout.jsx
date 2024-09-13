@@ -1,18 +1,35 @@
-import React from 'react'
-import Navbar from './Navbar'
-import Footer from './Footer'
+import React, { useEffect, useState } from "react";
+import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
-import NavBar from './NavBar/NavBar';
+import NavBar from "./NavBar/NavBar";
 
 const Layout = () => {
-  return (
-    <div>
-      {/* <Navbar/> */}
-      <NavBar/>
-      <Outlet/>
-      <Footer/>
-    </div>
-  )
-}
+  // const [modalActive, setModalActive] = useState(true);
+  const [budget , setBudget] = useState(0);
 
-export default Layout
+  // useEffect(()=>{
+  //   localStorage.setItem("budget",0)
+  // },[])
+
+  // const getBudget = (e) =>{
+  //   e.preventDefault();
+  //   if (budget>0){
+  //     localStorage.setItem('budget', budget)
+  //     setModalActive(false)
+  //   }
+  // }
+  // const handleBudgetChange = (e) => {
+  //   setBudget(e.target.value);
+  // };
+  
+  return (
+    <div className="relative bg-secondary-color font-body">
+      <NavBar />
+      <Outlet />
+      <Footer />
+      
+    </div>
+  );
+};
+
+export default Layout;

@@ -7,7 +7,7 @@ const AppError = require('../util/AppError')
 const tryCatch = require('../util/tryCatch')
 
 exports.getCar = tryCatch(async (req, res, next) => {
-  const car = await Car.findOne({ userID: req.user.id, status: 'pending' }).populate('items.packageID')
+  const car = await Car.findOne({ userID: req.user.id, status: 'pending' })
 
   // if (!car) {
   //   const newCar = await Car.create({
@@ -42,13 +42,20 @@ exports.addPackageCar = tryCatch(async (req, res, next) => {
     const newCar = await Car.create({
       userID: req.user.id,
       items: [{ packageID, quantity: 1 }],
-      total: findPackage.priceTotal,
+      priceTotal: findPackage.priceTotal,
     })
 
     return res.status(201).json({ status: 'success', data: newCar })
   }
 
-  await car.updateOne({ $push: { items: { packageID, quantity: 1 } }, total: car.total + findPackage.priceTotal })
+  const quantityPackage = car.items.find(item => item.packageID.toString() === packageID)
+
+  if (quantityPackage) {
+    await car.updateOne({ $set: { 'items.$[elem].quantity': quantityPackage.quantity + 1 }, priceTotal: car.priceTotal + findPackage.priceTotal }, { arrayFilters: [{ 'elem.packageID': packageID }] })
+  } else {
+    await car.updateOne({ $push: { items: { packageID, quantity: 1 } }, priceTotal: car.priceTotal + findPackage.priceTotal, packageTotal: car.packageTotal + 1 })
+
+  }
 
   await car.save()
 

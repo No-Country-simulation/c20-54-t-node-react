@@ -22,7 +22,7 @@ const LoginBooking = () => {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full h-full">
         <div className="login-container">
           <div className="login-banner">
             <h1 className="font-bold font-title text-primary-color text-xl">

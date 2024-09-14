@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import "../assets/css/LoginBanner.css";
 
 const LoginBooking = () => {
@@ -26,9 +27,10 @@ const LoginBooking = () => {
     setSuccess(false);
 
     try {
+      console.log("formData:", formData);
       // Hacemos la solicitud POST para autenticar
       const response = await axios.post(
-        "https://api-tu-servidor.com/login",
+        "https://c20-54-t-node-react.onrender.com/api/v1/users/",
         formData
       );
 
@@ -50,7 +52,7 @@ const LoginBooking = () => {
 
   return (
     <>
-      <div className="w-full h-full">
+      <div className="w-full">
         <div className="login-container">
           <div className="login-banner">
             <h1 className="font-bold font-title text-primary-color">
@@ -60,7 +62,7 @@ const LoginBooking = () => {
               Inicia sesión para continuar
             </p>
           </div>
-          <div className="login-form  bg-bg-info font-bold ">
+          <div className="login-form bg-bg-info font-bold  w-full">
             <form onSubmit={handleSubmit}>
               <h2>Login</h2>
 
@@ -101,6 +103,11 @@ const LoginBooking = () => {
                   disabled={loading}
                 >
                   {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
+                </button>
+              </div>
+              <div className="registrarse ">
+                <button className=" registrarse">
+                  <Link to={"/register "}>Registrarse</Link>
                 </button>
               </div>
             </form>

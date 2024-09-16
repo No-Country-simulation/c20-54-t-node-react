@@ -6,33 +6,29 @@ import { FaLocationDot } from "react-icons/fa6";
 import React, { useEffect } from 'react';
 
 
-const Card = () =>{
-
+const Card = ({data={}}) =>{
+console.log(data)
     return(
         
             <div className="w-1/2 h-max rounded overflow-hidden shadow-lg mt-0 ">
-                <h1 className="text-3xl font-extrabold dark:text-black mb-4">Tour antiguo en autobús de dos pisos
-                <br />Y crucero por el río Támesis </h1>
+                <h1 className="text-3xl font-extrabold dark:text-black mb-4">{data?.package?.title} </h1>
                 <div className="pb-3">
-                 <Stars/>
+                 <Stars rating={data?.package?.rating}/>
                 </div>
                 <figure className=" mb-2 w-full  relative"  >
-                    <img src="https://images.pexels.com/photos/1450340/pexels-photo-1450340.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="montanias" />
+                    <img src={data?.package?.firstImage} alt="montanias" />
                     
                 </figure>
                 <div className="flex">
-                    <figure className="w-50 ml-0 mb-1 mr-1" >
-                        <img src="https://images.pexels.com/photos/2662875/pexels-photo-2662875.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
-                    </figure>
-                    <figure className="w-50 ml-0 mb-1 mr-1">
-                        <img src="https://media.istockphoto.com/id/1199804796/es/foto/retrato-de-mujer-tur%C3%ADstica-levant%C3%B3-las-manos-y-de-pie-casi-ventana-mirando-a-la-hermosa-vista.jpg?b=1&s=612x612&w=0&k=20&c=jEgfimwd8kyWyMC2SRMPsK0nJkOAFMkdmZF-U_2e1pk=" alt="" />
-                    </figure>
-                    <figure className="w-50 ml-0 mb-1 mr-1">
-                        <img src="https://images.pexels.com/photos/12260757/pexels-photo-12260757.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
-                    </figure>
-                    <figure className="w-50 ml-0 mb-1 mr-1">
-                        <img src= "https://images.pexels.com/photos/18785919/pexels-photo-18785919/free-photo-of-londres-desde-the-shard.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
-                    </figure>
+                   
+                   {
+                    data?.package?.image.map(data=>{
+                        return(  
+                        <figure className="w-50 ml-0 mb-1 mr-1" >
+                            <img src={data} alt="" />
+                        </figure>)
+                    })
+                   }
 
                 </div>
                 <article className="flex flex-wrap p-2">

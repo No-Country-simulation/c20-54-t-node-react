@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
+import usePostPackage from '../services/usePostPackage';
+import { useParams } from 'react-router-dom';
 
 
-
-const CommentSection = () => {
+const CommentSection = ({packageId}) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
-  const [commentsList, setCommentsList] = useState([]);
-
+  const [valuePackage,setvaluePackage]= useState(packageId)
+  const { idCard } = useParams(); 
   const handleRatingClick = (index) => {
     setRating(index + 1);
   };
-
+  const {fetchData}=usePostPackage(idCard,setvaluePackage)
+  useEffect(( )=>{
+    setvaluePackage(packageId)
+  },[packageId])
   const handleSubmit = (e) => {
     e.preventDefault();
     if (comment.trim()) {
-      setCommentsList([...commentsList, { rating, comment }]);
+      fetchData(rating,comment)
       setComment('');
       setRating(0);
     }
   };
-
+console.log(valuePackage)
   return (
     <div className="p-4 rounded-lg shadow-lg w-1/2 ml-80 mt-10 overflow-hidden ">
       <h2 className="text-xl font-bold mb-4 text-primary-color">Comentarios y Puntuación</h2>
@@ -56,22 +60,22 @@ const CommentSection = () => {
       </form>
 
       <div>
-        {commentsList.length === 0 ? (
+        {valuePackage?.package?.comments?.length === 0 ? (
           <p>No hay comentarios aún.</p>
         ) : (
-          commentsList.map((item, index) => (
+          valuePackage?.package?.comments?.map((item, index) => (
             <div key={index} className="mb-4 p-2 border border-gray-200 rounded-md shadow-sm">
               <div className="flex">
                 {[...Array(5)].map((_, starIndex) => (
                   <span
                     key={starIndex}
-                    className={`text-xl ${starIndex < item.rating ? 'text-yellow-500' : 'text-gray-400'}`}
+                    className={`text-xl ${starIndex < item?.rating ? 'text-yellow-500' : 'text-gray-400'}`}
                   >
-                    {starIndex < item.rating ? <FaStar /> : <FaRegStar />}
+                    {starIndex < item?.rating ? <FaStar /> : <FaRegStar />}
                   </span>
                 ))}
               </div>
-              <p className="mt-2">{item.comment}</p>
+              <p className="mt-2">{item?.content}</p>
             </div>
           ))
         )}

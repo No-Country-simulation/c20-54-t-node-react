@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/LoginBanner.css";
 
 const LoginBooking = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "", // Cambié 'username' por 'email' para mayor consistencia
     password: "",
@@ -41,6 +42,7 @@ const LoginBooking = () => {
         // Almacenar el token en el localStorage (o cookies) y manejar el éxito
         localStorage.setItem("token", response.data.token);
         setSuccess(true); // Cambiamos el estado a éxito
+        navigate(`/`)
       }
     } catch (err) {
       console.error("Error de autenticación:", err);

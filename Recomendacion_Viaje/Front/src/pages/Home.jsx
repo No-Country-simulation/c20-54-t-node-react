@@ -16,6 +16,7 @@ const Home = () => {
   const [packages, setPackages] = useState(null);
   const budgetRef = useRef(null);
   const [budget, setBudget] = useState(null);
+  const [errorBudget, setErrorBudget] = useState(false);
   const [modalActive, setModalActive] = useState(true);
   const [filterActive, setFilterActive] = useState(0);
   const [sort, setSort] = useState(null);
@@ -80,8 +81,12 @@ const Home = () => {
     e.preventDefault();
     const budget = budgetRef.current.value;
     if (budget > 0) {
+      setErrorBudget(false)
       setBudget(budget);
       setModalActive(false);
+    }
+    else{
+      setErrorBudget(true)
     }
   };
 
@@ -220,7 +225,7 @@ const Home = () => {
                     {item.description.content}
                   </p>
                   <button
-                  onClick={()=>navigate(`/details/${item._id}`)}
+                    onClick={() => navigate(`/details/${item._id}`)}
                     type="button"
                     className="mt-3 flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full "
                   >
@@ -232,61 +237,63 @@ const Home = () => {
           )}
         </section>
         {/* pagination */}
-        <div className="w-full flex justify-center items-center">
-          <nav>
-            <ul className="flex items-center -space-x-px h-10 text-base">
-              <li>
-                <a className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-primary-color bg-secondary-color border border-e-0 border-primary-color rounded-s-lg hover:font-bold hover:text-secondary-color hover:bg-primary-color active:text-secondary-color active:bg-primary-color">
-                  <span className="sr-only">Previous</span>
-                  <svg
-                    className="w-3 h-3 rtl:rotate-180"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 6 10"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 1 1 5l4 4"
-                    />
-                  </svg>
-                </a>
-              </li>
-              {packages
-                ? [...Array(packages.totalPages)].map((item, index) => (
-                    <li key={`pag-${index}`}>
-                      <a className="flex items-center justify-center px-4 h-10 leading-tight text-primary-color bg-secondary-color border border-primary-color hover:font-bold hover:text-secondary-color hover:bg-primary-color active:text-secondary-color active:bg-primary-color">
-                        1
-                      </a>
-                    </li>
-                  ))
-                : null}
-              <li>
-                <a className="flex items-center justify-center px-4 h-10 leading-tight text-primary-color bg-secondary-color border border-primary-color rounded-e-lg hover:font-bold hover:text-secondary-color hover:bg-primary-color active:text-secondary-color active:bg-primary-color ">
-                  <span className="sr-only">Next</span>
-                  <svg
-                    className="w-3 h-3 rtl:rotate-180"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 6 10"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 9 4-4-4-4"
-                    />
-                  </svg>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        {packages?.totalPages <= 0 || packages?.data.packages == null ? null : (
+          <div className="w-full flex justify-center items-center">
+            <nav>
+              <ul className="flex items-center -space-x-px h-10 text-base">
+                <li>
+                  <a className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-primary-color bg-secondary-color border border-e-0 border-primary-color rounded-s-lg hover:font-bold hover:text-secondary-color hover:bg-primary-color active:text-secondary-color active:bg-primary-color">
+                    <span className="sr-only">Previous</span>
+                    <svg
+                      className="w-3 h-3 rtl:rotate-180"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 6 10"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 1 1 5l4 4"
+                      />
+                    </svg>
+                  </a>
+                </li>
+                {packages
+                  ? [...Array(packages.totalPages)].map((item, index) => (
+                      <li key={`pag-${index}`}>
+                        <a className="flex items-center justify-center px-4 h-10 leading-tight text-primary-color bg-secondary-color border border-primary-color hover:font-bold hover:text-secondary-color hover:bg-primary-color active:text-secondary-color active:bg-primary-color">
+                          1
+                        </a>
+                      </li>
+                    ))
+                  : null}
+                <li>
+                  <a className="flex items-center justify-center px-4 h-10 leading-tight text-primary-color bg-secondary-color border border-primary-color rounded-e-lg hover:font-bold hover:text-secondary-color hover:bg-primary-color active:text-secondary-color active:bg-primary-color ">
+                    <span className="sr-only">Next</span>
+                    <svg
+                      className="w-3 h-3 rtl:rotate-180"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 6 10"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m1 9 4-4-4-4"
+                      />
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        )}
         {/* opinions section */}
         <section>
           <figure className="mt-4 relative h-80">
@@ -352,6 +359,11 @@ const Home = () => {
               ref={budgetRef}
               placeholder={budget}
             />
+            { errorBudget? (
+              <p className="text-action-color my-1 text-sm">
+                Ingrese un valor mayor a cero
+              </p>
+            ) : null}
             <button
               type="submit"
               className="flex text-sm mt-3 mb-2 bg-action-color text-secondary-color font-bold py-2 px-4 rounded-full hover:bg-primary-color"

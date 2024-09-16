@@ -15,7 +15,8 @@ const {
   getPackages,
   getPackageById,
   //getPackagesAll,
-  createCommentPackage
+  createCommentPackage,
+  getCommentPackage
 } = require('../controllers/package.controller');
 const validate = require('../middlewares/validateExpress');
 
@@ -27,5 +28,6 @@ router.get('/:id', getPackageById);
 router.post('/:id/comment', auth, validate(packageComents), createCommentPackage);
 // ------- router para obtener comentario de un paquete por id ----------
 // router.get('/:id/comment', createCommentPackage);
+router.get('/:id/comment', getCommentPackage);
 
 module.exports = { packageRouter: router }

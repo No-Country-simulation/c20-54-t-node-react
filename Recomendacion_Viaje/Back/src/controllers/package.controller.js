@@ -110,3 +110,19 @@ exports.createCommentPackage = tryCatch(async (req, res, next) => {
 })
 
 // crear controlador para obtener comentarios de un paquete por id
+
+
+exports.getCommentPackage = tryCatch(async (req, res, next) => {
+  const { id } = req.params;
+
+  const package = await Package.findById(id);
+
+  if (!package) return next(new AppError('Package not found', 404));
+
+ return res.status(200).json({
+    status: 'success',
+    data: {
+      comments: package.comments
+    }
+  });
+});

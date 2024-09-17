@@ -19,7 +19,24 @@ exports.getReservations = tryCatch(async (req, res, next) => {
 })
 
 exports.createReservation = tryCatch(async (req, res, next) => {
-  const { packageID, quantity = 1, isAuthor = true } = req.body
+  const { packageID, quantity = 1, isGuest = true, guestID } = req.body
+
+
+  if (isGuest && !req.body.guest) return next(new AppError('Guest data is required', 400))
+
+  const formData = {
+    userID: req.user.id,
+    carID: null,
+    isGuest,
+    guest: guestID ? null : {
+      userID: req.user.id,
+      username: req.body.guest.username || null,
+      name: req.body.guest.name,
+      lastName: req.body.guest.lastName,
+      email: req.body.guest.email,
+      birthDate: req.body.guest.birthDate,
+    }
+  }
 
   if (packageID) {
     const package = await Package.findOne({ _id: packageID, status: 'active' })
@@ -34,10 +51,10 @@ exports.createReservation = tryCatch(async (req, res, next) => {
       packageTotal: quantity,
     })
 
+    formData.carID = newCar._id
+
     const reservations = new Reservation({
-      userID: req.user.id,
-      carID: newCar._id,
-      isAuthor,
+      ...formData
     })
 
     await reservations.save()
@@ -49,11 +66,10 @@ exports.createReservation = tryCatch(async (req, res, next) => {
 
   if (!car) return next(new AppError('Car not found', 404))
 
+  formData.carID = car._id
+
   new Reservation({
-    userID: req.user.id,
-    carID: car._id,
-    isAuthor,
-    guest: req.body.guest,
+    ...formData
   }).save()
 
 })

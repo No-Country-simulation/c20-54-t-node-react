@@ -12,8 +12,10 @@ exports.getReservations = tryCatch(async (req, res, next) => {
   const { limit = 8, page = 1 } = req.query
 
   const reservations = await Reservation.find({ userID: req.user.id })
-    .limit(limit * 1)
+    .populate('userID carID guestID')
     .skip((page - 1) * limit)
+    .limit(limit)
+    .sort({ createdAt: -1 })
 
   res.status(200).json({ status: 'success', data: reservations })
 })

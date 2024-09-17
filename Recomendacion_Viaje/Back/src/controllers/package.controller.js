@@ -11,9 +11,7 @@ const tryCatch = require('../util/tryCatch')
 
 
 exports.getPackages = tryCatch(async (req, res, next) => {
-  const { to = '', price = 0, category = "all", limit = 8, page = 1 } = req.query
-
-  console.log(' price ', price)
+  const { to = '', price = 0, category = "all", limit = 8, page = 1, sort = 'min' } = req.query
 
   const query = {}
 
@@ -38,7 +36,9 @@ exports.getPackages = tryCatch(async (req, res, next) => {
     delete query.category
   }
 
-  const packages = await Package.find(query)
+
+
+  const packages = await Package.find(query).sort({ priceTotal: sort === 'min' ? 1 : -1 })
     .limit(limit * 1)
     .skip((+page - 1) * limit)
     .exec()
@@ -119,7 +119,7 @@ exports.getCommentPackage = tryCatch(async (req, res, next) => {
 
   if (!package) return next(new AppError('Package not found', 404));
 
- return res.status(200).json({
+  return res.status(200).json({
     status: 'success',
     data: {
       comments: package.comments

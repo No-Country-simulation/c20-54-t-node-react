@@ -38,9 +38,12 @@ const LoginBooking = () => {
       console.log("Respuesta del servidor:", response.data);
 
       // Suponemos que el servidor devuelve un token si la autenticación es exitosa
-      if (response.data.token) {
+      if (response.data.data.token) {
         // Almacenar el token en el localStorage (o cookies) y manejar el éxito
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.data.data.token);
+        localStorage.setItem("user_id", response.data.data.user._id);
+
+        console.log("storage")
         setSuccess(true); // Cambiamos el estado a éxito
         navigate(`/`)
       }

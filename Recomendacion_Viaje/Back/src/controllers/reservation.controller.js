@@ -37,10 +37,24 @@ exports.createReservation = tryCatch(async (req, res, next) => {
     const reservations = new Reservation({
       userID: req.user.id,
       carID: newCar._id,
+      isAuthor,
     })
+
+    await reservations.save()
+
+    return res.status(201).json({ status: 'success', data: reservations })
   }
 
   const car = await Car.findOne({ userID: req.user.id })
+
+  if (!car) return next(new AppError('Car not found', 404))
+
+  new Reservation({
+    userID: req.user.id,
+    carID: car._id,
+    isAuthor,
+    guest: req.body.guest,
+  }).save()
 
 })
 

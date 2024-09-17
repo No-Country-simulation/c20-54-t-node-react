@@ -6,7 +6,8 @@ exports.getPackages = [
   query('to').optional().isString().withMessage('to must be a string value'),
   query('category').optional().isString().withMessage('category must be a string value'),
   query('page').optional().isNumeric().withMessage('page must be a number value'),
-  query('limit').optional().isNumeric().withMessage('limit must be a number value')
+  query('limit').optional().isNumeric().withMessage('limit must be a number value'),
+  query('sort').optional().isString().withMessage('sort must be a string value')
 ]
 
 

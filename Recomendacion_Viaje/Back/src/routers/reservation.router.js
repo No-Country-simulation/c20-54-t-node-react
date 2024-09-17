@@ -12,3 +12,5 @@ const router = express.Router()
 // router
 
 router.post('/', auth, existyUserAuth, createReservation)
+
+module.exports = { reservationRouter: router }

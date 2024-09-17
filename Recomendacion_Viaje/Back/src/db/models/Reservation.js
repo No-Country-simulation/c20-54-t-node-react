@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// model
+const Guest = require('./Guest');
+
 const reservationSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
@@ -12,38 +15,18 @@ const reservationSchema = new Schema({
     ref: 'Package',
     required: true
   },
-  isAuthor: {
+  isGuest: {
     type: Boolean,
-    default: true
+    default: false
   },
   guestID: {
     type: Schema.Types.ObjectId,
     ref: 'Guest',
     required: false
   },
-  name: {
-    type: String,
-    required: false
-  },
-  lastName: {
-    type: String,
-    required: false
-  },
-  birthDate: {
-    type: Date,
-    required: false
-  },
-  idAth: {
-    type: String,
-    required: false
-  },
-  email: {
-    type: String,
-    required: false
-  },
-  date: {
-    type: Date,
-    required: false
+  dataGuest: {
+    type: Guest,
+    default: null
   },
   status: {
     type: String,

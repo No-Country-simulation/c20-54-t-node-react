@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // model
-const Guest = require('./Guest');
+const guestSchema = require('./Guest');
+
+console.log('guestSchema ------> ', guestSchema.obj);
 
 const reservationSchema = new Schema({
   userID: {
@@ -19,14 +21,25 @@ const reservationSchema = new Schema({
     type: Boolean,
     default: false
   },
-  guestID: {
-    type: Schema.Types.ObjectId,
-    ref: 'Guest',
-    required: false
+  username: {
+    type: String,
+    required: true
   },
-  dataGuest: {
-    type: Guest,
-    default: null
+  name: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  birthDate: {
+    type: Date,
+    required: true
   },
   status: {
     type: String,

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/LoginBanner.css";
 
 const LoginBooking = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "", // Cambié 'username' por 'email' para mayor consistencia
     password: "",
@@ -37,10 +38,14 @@ const LoginBooking = () => {
       console.log("Respuesta del servidor:", response.data);
 
       // Suponemos que el servidor devuelve un token si la autenticación es exitosa
-      if (response.data.token) {
+      if (response.data.data.token) {
         // Almacenar el token en el localStorage (o cookies) y manejar el éxito
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.data.data.token);
+        localStorage.setItem("user_id", response.data.data.user._id);
+
+        console.log("storage")
         setSuccess(true); // Cambiamos el estado a éxito
+        navigate(`/`)
       }
     } catch (err) {
       console.error("Error de autenticación:", err);

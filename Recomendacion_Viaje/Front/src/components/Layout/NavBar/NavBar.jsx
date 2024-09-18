@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./NavBar.css";
 import { gsap } from "gsap";
 import { Link, useNavigate } from "react-router-dom";
+import { getUserById } from "../../../services/userServices";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const user = null
+  const [user,setUser] = useState();
   // const user =
   // {
   //   name: "User",
   // };
+  useEffect(() => {
+    const user = localStorage.getItem("user_id")
+    console.log(user)
+    getUserById(user).then((response) => {
+        console.log("object",response)
+        setUser(response.data)
+    }).catch((e)=> console.log(e))
+  }, [])
+  
   React.useEffect(() => {
     // Animación GSAP para la carga inicial
     gsap.to(".logo", {

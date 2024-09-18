@@ -4,12 +4,16 @@ const tryCatch = require('../util/tryCatch')
 exports.existyUserAuth = tryCatch(async (req, res, next) => {
   const id = req.user.id
 
-  const User = await User.findById(id)
+  console.log('id user auth ', id)
 
-  if (!User) {
+  const user = await User.findById(id)
+
+  console.log('user auth ', user)
+
+  if (!user) {
     return res.status(400).json({ message: 'User not found' })
   }
 
-  req.user = User
+  req.user = user
   return next()
 })

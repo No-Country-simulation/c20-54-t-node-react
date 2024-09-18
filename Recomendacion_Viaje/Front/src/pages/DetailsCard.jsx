@@ -18,7 +18,7 @@ const {fetchData,data}=useGetPackage(idCard);
     return (
       <>
         
-          <div className="flex ml-80 flex flex-col md:flex-row md:space-x-4" >
+          <div className="flex ml-80 flex-col md:flex-row md:space-x-4" >
             <Card data={data}/>
             <Form/>
           </div>

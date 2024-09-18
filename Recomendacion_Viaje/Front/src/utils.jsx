@@ -5,8 +5,7 @@ const apiClient = axios.create({
   baseURL: 'https://c20-54-t-node-react.onrender.com/api/v1/', // Reemplaza con tu URL base
   headers: {
     'Content-Type': 'application/json',
-    "Authorization": 
-"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZGU2NzIxOTZhZjkwNjAyMjNhMTExNyIsImlhdCI6MTcyNjQ1OTgzOSwiZXhwIjoxNzI2NTQ2MjM5fQ.YOYzmYppg5YY8xg18NJBhdesXN8Nbm9e-bUkJ5IagCA"
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
   },
 });
 

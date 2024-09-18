@@ -1,0 +1,46 @@
+/* Estilos generales */
+.login-container {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: url('../pexels-photo-3922921.jpeg') no-repeat center center;
+  background-size: cover;
+  padding: 0 10%;
+}
+
+.login-banner {
+  flex: 1;
+  text-align: center;
+  padding: 30px;
+}
+.login-banner h1{
+  font-size: 3rem;
+}  
+.login-banner p {
+  font-size: 1.5rem;
+}
+.login-form {
+  flex: 1;
+  max-width: 400px;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+}
+
+
+.login-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+}
+
+.registrarse{
+  cursor: pointer;
+  text-decoration: underline;
+  text-align: center;
+}
+  
+
+  

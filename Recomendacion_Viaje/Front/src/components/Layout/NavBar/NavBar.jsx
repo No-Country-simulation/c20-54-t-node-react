@@ -7,15 +7,10 @@ import { getUserById } from "../../../services/userServices";
 const NavBar = () => {
   const navigate = useNavigate();
   const [user,setUser] = useState();
-  // const user =
-  // {
-  //   name: "User",
-  // };
+
   useEffect(() => {
     const user = localStorage.getItem("user_id")
-    console.log(user)
     getUserById(user).then((response) => {
-        console.log("object",response)
         setUser(response.data)
     }).catch((e)=> console.log(e))
   }, [])

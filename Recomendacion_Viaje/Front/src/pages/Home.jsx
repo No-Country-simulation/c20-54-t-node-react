@@ -4,12 +4,13 @@ import filter from "../assets/banner2.jpg";
 import filter1 from "../assets/packetFilter.jpg";
 import filter2 from "../assets/hotelFilter.jpg";
 import filter3 from "../assets/transportFilter.jpg";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 import { format } from "date-fns";
 import {
   getPackageByCategoryAndPrice,
   getPackageByPrice,
+  getPackageSort,
 } from "../services/PackageServices";
 
 const Home = () => {
@@ -18,8 +19,8 @@ const Home = () => {
   const [budget, setBudget] = useState(null);
   const [errorBudget, setErrorBudget] = useState(false);
   const [modalActive, setModalActive] = useState(true);
-  const [filterActive, setFilterActive] = useState(0);
-  const [sort, setSort] = useState(null);
+  const [filterActive, setFilterActive] = useState("all");
+  const [sort, setSort] = useState("");
 
   const navigate = useNavigate();
 
@@ -28,65 +29,31 @@ const Home = () => {
       name: "Todos",
       image:
         "https://res.cloudinary.com/dwvdzy8xq/image/upload/v1726242993/Proyecto%20Agencia/hiker-1607078_1280_i6uc30.jpg",
+      englishName: "all",
     },
-    { name: "Alojamiento", image: filter2 },
-    { name: "Transporte", image: filter3 },
-    { name: "Paquetes", image: filter1 },
+    { name: "Alojamiento", image: filter2, englishName: "hosting" },
+    { name: "Transporte", image: filter3, englishName: "transport" },
+    { name: "Paquetes", image: filter1, englishName: "completed" },
   ];
 
   useEffect(() => {
-    console.log("budget", budget);
-    if (budget != null) {
-      switch (filterActive) {
-        case 0:
-          getPackageByPrice(budget)
-            .then((response) => {
-              console.log("response all", response);
-              setPackages(response);
-            })
-            .catch((e) => console.log(e));
-          break;
-        case 1:
-          getPackageByCategoryAndPrice("hosting", budget)
-            .then((response) => {
-              console.log("response hosting", response);
-              setPackages(response);
-            })
-            .catch((e) => console.log(e));
-          break;
-        case 2:
-          getPackageByCategoryAndPrice("transport", budget)
-            .then((response) => {
-              console.log("response transport", response);
-              setPackages(response);
-            })
-            .catch((e) => console.log(e));
-          break;
-        case 3:
-          getPackageByCategoryAndPrice("completed", budget)
-            .then((response) => {
-              console.log("response completed", response);
-              setPackages(response);
-            })
-            .catch((e) => console.log(e));
-          break;
-
-        default:
-          break;
-      }
+    const dataBudget = sessionStorage.getItem("budget");
+    if (dataBudget != null) {
+      setBudget(dataBudget);
+      setModalActive(false);
     }
-  }, [budget, filterActive]);
+  }, []);
 
   const getBudget = (e) => {
     e.preventDefault();
     const budget = budgetRef.current.value;
     if (budget > 0) {
-      setErrorBudget(false)
+      setErrorBudget(false);
       setBudget(budget);
+      sessionStorage.setItem("budget", budget);
       setModalActive(false);
-    }
-    else{
-      setErrorBudget(true)
+    } else {
+      setErrorBudget(true);
     }
   };
 
@@ -95,18 +62,45 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (sort != null) {
-      switch (sort) {
-        case "lowPrice":
-          break;
-        case "highPrice":
-          break;
+    if (budget != null) {
+      if (sort != null) {
+        switch (sort) {
+          case "lowPrice":
+            console.log("entre al switch min");
+            getPackageSort(filterActive, budget, "min")
+              .then((response) =>
+                setPackages(response)
+              )
+              .catch((e) => console.log(e));
+            break;
+          case "highPrice":
+            console.log("entre al switch max");
+            getPackageSort(filterActive, budget, "max")
+              .then((response) =>
+                setPackages(response)
+              )
+              .catch((e) => console.log(e));
+            break;
 
-        default:
-          break;
+          default:
+            if (filterActive == "all") {
+              getPackageByPrice(budget)
+                .then((response) => {
+                  setPackages(response);
+                })
+                .catch((e) => console.log(e));
+            } else {
+              getPackageByCategoryAndPrice(filterActive, budget)
+                .then((response) => {
+                  setPackages(response);
+                })
+                .catch((e) => console.log(e));
+            }
+            break;
+        }
       }
     }
-  }, [packages, sort]);
+  }, [budget, filterActive, sort]);
 
   return (
     <div className="relative secondary-color">
@@ -133,10 +127,10 @@ const Home = () => {
                 key={`item-${index}`}
                 className="w-1/4 flex justify-center items-center"
               >
-                <button onClick={() => setFilterActive(index)}>
+                <button onClick={() => setFilterActive(item.englishName)}>
                   <figure
                     className={`relative  flex justify-center w-32 h-32 hover:scale-110 transition-transform duration-300  ${
-                      filterActive == index
+                      filterActive == item.englishName
                         ? "border-2 border-primary-color rounded-full"
                         : ""
                     }`}
@@ -171,12 +165,15 @@ const Home = () => {
                 id="sort"
                 className="border border-primary-color text-base rounded-lg focus:ring-2 focus:border-primary-color focus:ring-primary-color active:ring-primary-color py-2 px-4"
                 onChange={handleSort}
+                defaultValue=""
               >
-                <option>Ordenar por:</option>
+                <option value="" className="" >
+                  Ordenar por:
+                </option>
                 <option value="lowPrice">Precio: menor a mayor</option>
                 <option value="highPrice">Precio: mayor a menor</option>
-                <option value="lowScore">Puntuación: menor a mayor</option>
-                <option value="highScore">Puntuación: mayor a menor</option>
+                {/*<option value="lowScore">Puntuación: menor a mayor</option>
+                <option value="highScore">Puntuación: mayor a menor</option> */}
               </select>
             </form>
           </div>
@@ -359,7 +356,7 @@ const Home = () => {
               ref={budgetRef}
               placeholder={budget}
             />
-            { errorBudget? (
+            {errorBudget ? (
               <p className="text-action-color my-1 text-sm">
                 Ingrese un valor mayor a cero
               </p>

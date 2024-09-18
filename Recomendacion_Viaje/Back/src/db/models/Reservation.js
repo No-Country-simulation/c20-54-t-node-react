@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// model
-const guestSchema = require('./Guest');
-
-console.log('guestSchema ------> ', guestSchema.obj);
-
 const reservationSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
@@ -23,23 +18,27 @@ const reservationSchema = new Schema({
   },
   username: {
     type: String,
-    required: true
+    required: false
   },
   name: {
     type: String,
-    required: true
+    required: false
   },
   lastName: {
     type: String,
-    required: true
+    required: false
+  },
+  idAt: {
+    type: String,
+    required: false,
   },
   email: {
     type: String,
-    required: true
+    required: false
   },
   birthDate: {
     type: Date,
-    required: true
+    required: false
   },
   status: {
     type: String,

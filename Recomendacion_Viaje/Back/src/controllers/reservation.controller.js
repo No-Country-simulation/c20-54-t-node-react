@@ -4,8 +4,8 @@ const Car = require('../db/models/Car')
 const Package = require('../db/models/Package')
 
 // utils
-const AppError = require('../utils/AppError')
-const tryCatch = require('../utils/tryCatch')
+const AppError = require('../util/AppError')
+const tryCatch = require('../util/tryCatch')
 
 
 exports.getReservations = tryCatch(async (req, res, next) => {
@@ -30,14 +30,13 @@ exports.createReservation = tryCatch(async (req, res, next) => {
     userID: req.user.id,
     carID: null,
     isGuest,
-    guest: guestID ? null : {
-      userID: req.user.id,
-      username: req.body.guest.username || null,
-      name: req.body.guest.name,
-      lastName: req.body.guest.lastName,
-      email: req.body.guest.email,
-      birthDate: req.body.guest.birthDate,
-    }
+    name: isGuest ? req.body.guest.name : null,
+    lastName: isGuest ? req.body.guest.lastName : null,
+    email: isGuest ? req.body.guest.email : null,
+    phone: isGuest ? req.body.guest.phone : null,
+    guestID: isGuest ? guestID : null,
+    status: 'pending',
+
   }
 
   if (packageID) {

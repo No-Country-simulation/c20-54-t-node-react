@@ -9,9 +9,10 @@ const ReservationModal = () => {
   const [userData, setUserData] = useState({
     name: "Nombre Ejemplo",
     lastName: "Apellido Ejemplo",
+    idAt: "12345678",
     email: "ejemplo@email.com",
     dateBirth: "01/01/1990",
-    dni: "12345678",
+    
   });
 
   const navigate = useNavigate(); // Hook para redirigir

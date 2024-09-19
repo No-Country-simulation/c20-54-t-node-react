@@ -29,13 +29,6 @@
   margin: 1rem;
 }
 
-
-.login-form h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  text-align: center;
-}
-
 .registrarse{
   cursor: pointer;
   text-decoration: underline;

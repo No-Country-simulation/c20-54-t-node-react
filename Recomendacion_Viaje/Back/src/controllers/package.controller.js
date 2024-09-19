@@ -4,6 +4,7 @@ const Room = require('../db/models/Room')
 const Mean = require('../db/models/Mean')
 const Hosting = require('../db/models/Hosting')
 const Transport = require('../db/models/Transport')
+const User = require('../db/models/User')
 
 // utils
 const AppError = require('../util/AppError')
@@ -94,8 +95,14 @@ exports.createCommentPackage = tryCatch(async (req, res, next) => {
 
   if (!package) return next(new AppError('Package not found', 404))
 
+  const user = await User.findOne({
+    _id: req.user.id
+  })
+
   package.comments.push({
     userID: req.user.id,
+    name: user.name,
+    lastName: user.lastName,
     content: comment,
     rating,
     date: new Date()

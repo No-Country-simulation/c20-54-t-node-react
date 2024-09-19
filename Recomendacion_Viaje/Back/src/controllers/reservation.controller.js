@@ -12,12 +12,29 @@ exports.getReservations = tryCatch(async (req, res, next) => {
   const { limit = 8, page = 1 } = req.query
 
   const reservations = await Reservation.find({ userID: req.user.id })
-    .populate('userID carID')
+    .populate({
+      path: 'userID',
+      select: 'name lastName email idAt'
+    })
+    .populate({
+      path: 'carID',
+      populate: {
+        path: 'items.packageID',
+        select: 'name description priceTotal dateStart dateEnd title city'
+      }
+    })
     .skip((page - 1) * limit)
     .limit(limit)
     .sort({ createdAt: -1 })
 
-  res.status(200).json({ status: 'success', data: reservations })
+  const responseSeralize = reservations.map(reservation => {
+    const { carID, ...rest } = reservation._doc
+    return { ...rest, packages: carID.items }
+  })
+
+  console.log('packages ', responseSeralize, ' items ', responseSeralize[0].packages)
+
+  res.status(200).json({ status: 'success', data: responseSeralize })
 })
 
 exports.createReservation = tryCatch(async (req, res, next) => {
@@ -95,7 +112,12 @@ exports.createReservation = tryCatch(async (req, res, next) => {
       }
     })
 
-  return res.status(201).json({ status: 'success', data: dataReservation })
+  const responseSeralize = dataReservation.map(reservation => {
+    const { carID, ...rest } = reservation._doc
+    return { ...rest, packages: carID.items }
+  })
+
+  return res.status(201).json({ status: 'success', data: responseSeralize })
 
 })
 

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/LoginBanner.css";
 
 const LoginBooking = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "", // Cambié 'username' por 'email' para mayor consistencia
     password: "",
@@ -43,9 +43,9 @@ const LoginBooking = () => {
         localStorage.setItem("token", response.data.data.token);
         localStorage.setItem("user_id", response.data.data.user._id);
 
-        console.log("storage")
+        console.log("storage");
         setSuccess(true); // Cambiamos el estado a éxito
-        navigate(`/`)
+        navigate(`/`);
       }
     } catch (err) {
       console.error("Error de autenticación:", err);
@@ -69,6 +69,7 @@ const LoginBooking = () => {
           </div>
           <div className="login-form bg-bg-info font-bold  w-full">
             <form onSubmit={handleSubmit}>
+              <h2>Login</h2>
 
               {error && <p className="text-red-500">{error}</p>}
               {success && (

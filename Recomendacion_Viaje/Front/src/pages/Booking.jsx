@@ -28,21 +28,17 @@ const Booking = () => {
     setLoading(true);
     setError("");
     setSuccess(false);
-
     try {
       // Realiza la solicitud POST usando Axios
-      const response = await axios.post("https://api.com/reservas", formData);
+      const response = await axios.post(
+        "https://c20-54-t-node-react.onrender.com/api/v1/reservation",
+        formData
+      );
 
       // Si la solicitud es exitosa, manejamos la respuesta
       console.log("Respuesta del servidor:", response.data);
+
       setSuccess(true); // Indica que la reserva fue exitosa
-      setFormData({
-        name: "",
-        lastName: "",
-        idAt: "",
-        email: "",
-        dateBirth: "",
-      }); // Resetea el formulario
     } catch (err) {
       console.error("Error al realizar la reserva:", err);
       setError("Hubo un error al procesar la reserva. Inténtalo de nuevo.");
@@ -63,13 +59,7 @@ const Booking = () => {
             <p className="font-bold text-primary-color">
               Completa los siguientes datos para realizar tu reserva
             </p>
-            <div className="bg-bg-info w-1\/2 bui-grid">
-              <aside className="py-2 px-4">
-                <div className="">
-                  <section className="">detalles de la reserva </section>
-                </div>
-              </aside>
-            </div>
+            <div className="bg-bg-info "></div>
           </div>
           <div className="reservation-form  bg-bg-info">
             <form onSubmit={handleSubmit}>
@@ -153,6 +143,8 @@ const Booking = () => {
               )}
               {error && <p className="error-message">{error}</p>}
             </form>
+            {/* Pasar los datos del formulario como props a ReservationDetails */}
+            {/*   <ReservationDetails formData={formData} />*/}
           </div>
         </div>
       </div>
@@ -161,4 +153,3 @@ const Booking = () => {
 };
 
 export default Booking;
-

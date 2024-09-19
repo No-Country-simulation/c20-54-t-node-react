@@ -5,7 +5,11 @@ import "../assets/css/Booking.css";
 
 const RegisterBooking = () => {
   const [formData, setFormData] = useState({
+    name: "",
+    lastName: "",
+    idAt: "",
     email: "",
+    dateBirth: "",
     password: "",
   });
 
@@ -13,7 +17,7 @@ const RegisterBooking = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleChange = (e) => {
+  const handleDateChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -25,19 +29,32 @@ const RegisterBooking = () => {
     setLoading(true);
     setError("");
     setSuccess(false);
-    console.log("formData:", formData);
+
+    // Obtener la fecha de nacimiento del formulario
+    const [year, month, day] = formData.dateBirth.split("-"); // Asumiendo que el formato actual es yyyy-mm-dd
+
+    // Cambiar el formato a mm/dd/yyyy
+    const formattedDateBirth = `${day}-${month}-${year}`;
+    console.log(formattedDateBirth);
+
+    // Crear una copia de formData con la fecha de nacimiento formateada
+    const updatedFormData = {
+      ...formData,
+      dateBirth: formattedDateBirth,
+    };
+
+    console.log("formData con fecha formateada:", updatedFormData);
 
     try {
-      // Hacemos la solicitud POST para registrar
+      // Hacemos la solicitud POST con la fecha de nacimiento en formato mm/dd/yyyy
       const response = await axios.post(
         "https://c20-54-t-node-react.onrender.com/api/v1/users/register",
-        formData
+        updatedFormData
       );
 
       console.log("Respuesta del servidor:", response.data);
 
       if (response.data.success) {
-        // Suponemos que el servidor devuelve un éxito al registrar
         setSuccess(true);
       }
     } catch (err) {
@@ -51,7 +68,7 @@ const RegisterBooking = () => {
   return (
     <div className="w-full">
       <div className="reservation-container">
-        <div className="login-banner">
+        <div className="reservation-banner">
           <h1 className="font-bold font-title text-primary-color">
             Crear una cuenta
           </h1>
@@ -59,10 +76,8 @@ const RegisterBooking = () => {
             Regístrate para empezar
           </p>
         </div>
-        <div className="login-form bg-bg-info font-bold w-full">
+        <div className="reservation-form bg-bg-info font-bold w-full">
           <form onSubmit={handleSubmit}>
-        
-
             {error && <p className="text-red-500">{error}</p>}
             {success && (
               <p className="text-green-500">
@@ -78,7 +93,7 @@ const RegisterBooking = () => {
                 id="name"
                 name="name"
                 value={formData.firstName}
-                onChange={handleChange}
+                onChange={handleDateChange}
                 required
               />
             </div>
@@ -91,7 +106,7 @@ const RegisterBooking = () => {
                 id="lastName"
                 name="lastName"
                 value={formData.lastName}
-                onChange={handleChange}
+                onChange={handleDateChange}
                 required
               />
             </div>
@@ -102,9 +117,9 @@ const RegisterBooking = () => {
                 className="rounded-full flex text-sm w-full  py-2 px-4 md:me-0"
                 type="text"
                 id="dni"
-                name="dni"
-                value={formData.dni}
-                onChange={handleChange}
+                name="idAt"
+                value={formData.idAt}
+                onChange={handleDateChange}
                 required
               />
             </div>
@@ -117,26 +132,26 @@ const RegisterBooking = () => {
                 id="email"
                 name="email"
                 value={formData.email}
-                onChange={handleChange}
+                onChange={handleDateChange}
                 required
               />
             </div>
 
             <div className=" my-4 ">
-              <label className="font-bold" htmlFor="birthDate">
+              <label className="font-bold" htmlFor="dateBirth">
                 Fecha de Nacimiento:
               </label>
               <input
                 className="rounded-full flex text-sm w-full py-2 px-4 md:me-0 "
                 type="Date"
-                id="birthDate"
-                name="birthDate"
-                value={formData.birthDate}
-                onChange={handleChange}
+                id="dateBirth"
+                name="dateBirth"
+                value={formData.dateBirth}
+                onChange={handleDateChange}
                 required
               />
             </div>
-            <div className="  flex flex-col justify-center items-center font-bold">
+            <div className="my-4 font-bold">
               <label htmlFor="password">Contraseña:</label>
               <input
                 className="rounded-full flex text-sm w-full  py-2 px-4 md:me-0 "
@@ -144,7 +159,7 @@ const RegisterBooking = () => {
                 id="password"
                 name="password"
                 value={formData.password}
-                onChange={handleChange}
+                onChange={handleDateChange}
                 required
               />
             </div>
@@ -172,4 +187,3 @@ const RegisterBooking = () => {
 };
 
 export default RegisterBooking;
-

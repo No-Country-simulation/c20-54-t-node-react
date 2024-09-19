@@ -32,7 +32,7 @@ exports.createReservation = tryCatch(async (req, res, next) => {
     name: isGuest ? req.body.guest.name : null,
     lastName: isGuest ? req.body.guest.lastName : null,
     email: isGuest ? req.body.guest.email : null,
-    phone: isGuest ? req.body.guest.phone : null,
+    idAt: isGuest ? req.body.guest.idAt : null,
     guestID: isGuest ? guestID : null,
     status: 'pending',
 

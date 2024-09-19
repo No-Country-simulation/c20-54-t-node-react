@@ -8,6 +8,7 @@ import RegisterBooking from "../pages/Register";
 import DetailsCard from "../pages/DetailsCard";
 import Home from "../pages/Home";
 import ReservationDetails from "../components/ReservationDetails";
+import MyBookings from "../pages/MyBookings";
 
 const AppRouter = () => {
   return (
@@ -23,6 +24,7 @@ const AppRouter = () => {
           element={<ReservationDetails />}
         />
         <Route path="/details/:idCard" element={<DetailsCard />} />
+        <Route path='/myBookings' element={<MyBookings/>} />
       </Route>
     </Routes>
   );

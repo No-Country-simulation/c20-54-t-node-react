@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { getData, postData } from '../utils';
+import { getData, postData } from '../utils/utils';
 
 const usePostPackage = (idCard='',setvaluePackage) => {
 

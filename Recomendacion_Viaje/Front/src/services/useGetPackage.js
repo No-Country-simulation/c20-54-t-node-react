@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { getData } from '../utils';
+import { getData } from '../utils/utils';
 
 const useGetPackage = (idCard='') => {
     const [data, setData] = useState({});

@@ -1,9 +1,7 @@
-import Layout from "../components/Layout/Layout"
 import Card from "../components/Card"
 import Form from "../components/Form"
 import Coments from "../components/Coments"
 import React, { useEffect, useState } from 'react';
-import { getData } from "../utils";
 import useGetPackage from "../services/useGetPackage";
 import { useParams } from "react-router-dom";
 

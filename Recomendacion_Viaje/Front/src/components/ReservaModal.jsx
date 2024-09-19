@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Importar useNavigate
 import "../assets/css/modal.css"; // Estilos del modal
+import { makeReservation } from "../services/ReservationsServices";
 
 const ReservationModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reservationFor, setReservationFor] = useState("");
+  const [reservationId, setReservationID] = useState(null);
   const [isForMe, setIsForMe] = useState(true); // Estado para saber si la reserva es para el usuario o para otra persona
   const [userData, setUserData] = useState({
-    name: "Nombre Ejemplo",
-    lastName: "Apellido Ejemplo",
-    idAt: "12345678",
-    email: "ejemplo@email.com",
-    dateBirth: "01/01/1990",
-    
+    name: "",
+    lastName: "",
+    idAt: "",
+    email: "",
+    dateBirth: "",
   });
 
   const navigate = useNavigate(); // Hook para redirigir
+  const packageId = "66e24b70879b6a6141505431"; //cambiarlo por el dato real
+  const token = localStorage.getItem("token");
 
   // Abrir el modal automáticamente cuando el componente se monte
   useEffect(() => {
@@ -31,12 +34,38 @@ const ReservationModal = () => {
     e.preventDefault();
     if (isForMe) {
       console.log("Reserva para mí");
+      // Lógica si la reserva es para el usuario
+      // const reservationDetails = {
+      //   name: "John", // Aquí puedes obtener el nombre real del usuario
+      //   lastName: "Doe",
+      //   idAt: "12345678",
+      //   email: "john.doe@example.com",
+      //   dateBirth: "01/01/1990",
+
+      //   // Otros detalles de la reserva
+      // };
+      const reservationDetails = {
+        token: token,
+        data: {
+          isGuest: false,
+          packageID: packageId,
+        },
+      };
+      makeReservation(reservationDetails)
+        .then((response) => {
+          console.log("response", response);
+          // navigate(`/reservation-details/${response.data._id}`);
+        })
+        .catch((e) => console.log(e));
+
+      console.log("reservacion", reservationDetails);
       // Redirigir a la página de detalles de la reserva si es para el usuario
-      navigate("/reservation-details", { state: userData });
     } else {
       console.log("Reserva para otra persona:", reservationFor);
-      // Redirigir al formulario de registro si la reserva es para otra persona
-      navigate("/register");
+      //cierra el modal
+      closeModal();
+
+      // Redirigir al formulario si la reserva es para otra persona
     }
   };
 

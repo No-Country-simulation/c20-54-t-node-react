@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "../assets/css/LoginBanner.css";
+import "../assets/css/Booking.css";
 
 const RegisterBooking = () => {
   const [formData, setFormData] = useState({
@@ -50,7 +50,7 @@ const RegisterBooking = () => {
 
   return (
     <div className="w-full">
-      <div className="login-container">
+      <div className="reservation-container">
         <div className="login-banner">
           <h1 className="font-bold font-title text-primary-color">
             Crear una cuenta

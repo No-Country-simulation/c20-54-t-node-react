@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../assets/css/Booking.css/";
+import ReservationModal from "../components/ReservaModal";
 
 const Booking = () => {
   const [formData, setFormData] = useState({
-    dni: "",
-    firstName: "",
+    name: "",
     lastName: "",
+    idAt: "",
     email: "",
-    birthDate: "",
-    phone: "",
+    dateBirth: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -37,12 +37,11 @@ const Booking = () => {
       console.log("Respuesta del servidor:", response.data);
       setSuccess(true); // Indica que la reserva fue exitosa
       setFormData({
-        dni: "",
-        firstName: "",
+        name: "",
         lastName: "",
+        idAt: "",
         email: "",
-        birthDate: "",
-        phone: "",
+        dateBirth: "",
       }); // Resetea el formulario
     } catch (err) {
       console.error("Error al realizar la reserva:", err);
@@ -54,6 +53,7 @@ const Booking = () => {
 
   return (
     <div className="w-full">
+      <ReservationModal />
       <div className="reservation-container">
         <div className="reservation-content">
           <div className="reservation-banner">
@@ -140,19 +140,6 @@ const Booking = () => {
                 />
               </div>
 
-              <div className="my-4 font-bold ">
-                <label htmlFor="phone">Número de Teléfono:</label>
-                <input
-                  className="rounded-full flex text-sm w-full  py-2 px-4 md:me-0"
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
               <button
                 className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
                 type="submit"
@@ -174,3 +161,4 @@ const Booking = () => {
 };
 
 export default Booking;
+

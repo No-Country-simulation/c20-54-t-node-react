@@ -99,20 +99,26 @@ exports.createCommentPackage = tryCatch(async (req, res, next) => {
     _id: req.user.id
   })
 
-  package.comments.push({
+  const dataComment = {
     userID: req.user.id,
     name: user.name,
     lastName: user.lastName,
     content: comment,
     rating,
     date: new Date()
+  }
+
+  package.comments.push({
+    ...dataComment
   })
 
   await package.save()
 
+  if (!package) return next(new AppError('Error to add comment', 500))
+
   return res.status(200).json({
     message: 'Comment added',
-    data: package
+    data: dataComment
   })
 })
 

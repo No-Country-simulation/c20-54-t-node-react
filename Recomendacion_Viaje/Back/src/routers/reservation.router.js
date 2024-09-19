@@ -12,6 +12,7 @@ const router = express.Router()
 // router
 
 router.get('/', auth, existyUserAuth, getReservations)
+router.get('/:id', auth, existyUserAuth, getReservations)
 router.post('/', auth, existyUserAuth, createReservation)
 
 module.exports = { reservationRouter: router }

@@ -69,7 +69,6 @@ const LoginBooking = () => {
           </div>
           <div className="login-form bg-bg-info font-bold  w-full">
             <form onSubmit={handleSubmit}>
-              <h2>Login</h2>
 
               {error && <p className="text-red-500">{error}</p>}
               {success && (

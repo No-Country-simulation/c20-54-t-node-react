@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/LoginBanner.css";
 
 const LoginBooking = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "", // Cambié 'username' por 'email' para mayor consistencia
     password: "",
@@ -26,19 +28,24 @@ const LoginBooking = () => {
     setSuccess(false);
 
     try {
+      console.log("formData:", formData);
       // Hacemos la solicitud POST para autenticar
       const response = await axios.post(
-        "https://api-tu-servidor.com/login",
+        "https://c20-54-t-node-react.onrender.com/api/v1/users/",
         formData
       );
 
       console.log("Respuesta del servidor:", response.data);
 
       // Suponemos que el servidor devuelve un token si la autenticación es exitosa
-      if (response.data.token) {
+      if (response.data.data.token) {
         // Almacenar el token en el localStorage (o cookies) y manejar el éxito
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.data.data.token);
+        localStorage.setItem("user_id", response.data.data.user._id);
+
+        console.log("storage")
         setSuccess(true); // Cambiamos el estado a éxito
+        navigate(`/`)
       }
     } catch (err) {
       console.error("Error de autenticación:", err);
@@ -60,9 +67,8 @@ const LoginBooking = () => {
               Inicia sesión para continuar
             </p>
           </div>
-          <div className="login-form  bg-bg-info font-bold ">
+          <div className="login-form bg-bg-info font-bold  w-full">
             <form onSubmit={handleSubmit}>
-              <h2>Login</h2>
 
               {error && <p className="text-red-500">{error}</p>}
               {success && (
@@ -101,6 +107,11 @@ const LoginBooking = () => {
                   disabled={loading}
                 >
                   {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
+                </button>
+              </div>
+              <div className="registrarse ">
+                <button className=" registrarse">
+                  <Link to={"/register "}>Registrarse</Link>
                 </button>
               </div>
             </form>

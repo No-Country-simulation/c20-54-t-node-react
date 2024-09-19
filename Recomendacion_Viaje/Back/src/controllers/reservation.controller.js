@@ -37,6 +37,30 @@ exports.getReservations = tryCatch(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: responseSeralize })
 })
 
+exports.getReservationById = tryCatch(async (req, res, next) => {
+  const { id } = req.params
+
+  const reservation = await Reservation.findOne({ _id: id, userID: req.user.id })
+    .populate({
+      path: 'userID',
+      select: 'name lastName email idAt'
+    })
+    .populate({
+      path: 'carID',
+      populate: {
+        path: 'items.packageID',
+        select: 'name description priceTotal dateStart dateEnd title city'
+      }
+    })
+
+  if (!reservation) return next(new AppError('Reservation not found', 404))
+
+  const { carID, ...rest } = reservation._doc
+  const packages = carID.items
+
+  res.status(200).json({ status: 'success', data: { ...rest, packages } })
+})
+
 exports.createReservation = tryCatch(async (req, res, next) => {
   const { packageID, quantity = 1, isGuest = true, guestID } = req.body
 

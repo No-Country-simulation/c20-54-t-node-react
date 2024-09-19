@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const reservationSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
@@ -9,7 +10,7 @@ const reservationSchema = new Schema({
   },
   carID: {
     type: Schema.Types.ObjectId,
-    ref: 'Package',
+    ref: 'Car',
     required: true
   },
   isGuest: {

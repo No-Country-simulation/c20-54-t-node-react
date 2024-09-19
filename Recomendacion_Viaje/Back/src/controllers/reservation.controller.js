@@ -12,7 +12,7 @@ exports.getReservations = tryCatch(async (req, res, next) => {
   const { limit = 8, page = 1 } = req.query
 
   const reservations = await Reservation.find({ userID: req.user.id })
-    .populate('userID carID guestID')
+    .populate('userID carID')
     .skip((page - 1) * limit)
     .limit(limit)
     .sort({ createdAt: -1 })
@@ -29,7 +29,6 @@ exports.createReservation = tryCatch(async (req, res, next) => {
   const formData = {
     userID: req.user.id,
     carID: null,
-    isGuest,
     name: isGuest ? req.body.guest.name : null,
     lastName: isGuest ? req.body.guest.lastName : null,
     email: isGuest ? req.body.guest.email : null,
@@ -54,13 +53,13 @@ exports.createReservation = tryCatch(async (req, res, next) => {
 
     formData.carID = newCar._id
 
-    const reservations = new Reservation({
+    const newReservation = await Reservation.create({
       ...formData
     })
 
-    await reservations.save()
-
-    return res.status(201).json({ status: 'success', data: reservations })
+    const dateReservation = await Reservation.findOne({ _id: newReservation._id }).populate('userID carID')
+    console.log('dateReservation ', dateReservation)
+    return res.status(201).json({ status: 'success', data: dateReservation })
   }
 
   const car = await Car.findOne({ userID: req.user.id })
@@ -69,9 +68,15 @@ exports.createReservation = tryCatch(async (req, res, next) => {
 
   formData.carID = car._id
 
-  new Reservation({
+  const newReservation = await Reservation.create({
     ...formData
-  }).save()
+  })
+
+  const dateReservation = await Reservation.findOne({ _id: newReservation._id }).populate('userID carID')
+
+  console.log('dateReservation ', dateReservation)
+
+  return res.status(201).json({ status: 'success', data: dateReservation })
 
 })
 

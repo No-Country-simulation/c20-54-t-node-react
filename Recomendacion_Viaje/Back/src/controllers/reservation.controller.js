@@ -57,9 +57,19 @@ exports.createReservation = tryCatch(async (req, res, next) => {
       ...formData
     })
 
-    const dateReservation = await Reservation.findOne({ _id: newReservation._id }).populate('userID carID')
-    console.log('dateReservation ', dateReservation)
-    return res.status(201).json({ status: 'success', data: dateReservation })
+    const dataReservation = await Reservation.findOne({ _id: newReservation._id })
+      .populate({
+        path: 'userID',
+        select: 'name lastName email idAt'
+      })
+      .populate({
+        path: 'carID',
+        populate: {
+          path: 'items.packageID',
+          select: 'name description priceTotal dateStart dateEnd title city'
+        }
+      })
+    return res.status(201).json({ status: 'success', data: dataReservation })
   }
 
   const car = await Car.findOne({ userID: req.user.id })
@@ -72,11 +82,20 @@ exports.createReservation = tryCatch(async (req, res, next) => {
     ...formData
   })
 
-  const dateReservation = await Reservation.findOne({ _id: newReservation._id }).populate('userID carID')
+  const dataReservation = await Reservation.findOne({ _id: newReservation._id })
+    .populate({
+      path: 'userID',
+      select: 'name lastName email idAt'
+    })
+    .populate({
+      path: 'carID',
+      populate: {
+        path: 'items.packageID',
+        select: 'name description priceTotal dateStart dateEnd title city'
+      }
+    })
 
-  console.log('dateReservation ', dateReservation)
-
-  return res.status(201).json({ status: 'success', data: dateReservation })
+  return res.status(201).json({ status: 'success', data: dataReservation })
 
 })
 

@@ -39,10 +39,8 @@ export const getPackageSort = async (category, price, sort) => {
   if (category != null && category != 0) {
     params.category = category;
   }
-  console.log("c",category,"p",price,"s",sort)
   try {
     const { data } = await axios.get(endpoints.getPackages, { params: params });
-    console.log("object", data)
     return data;
   } catch (error) {
     console.log(error);
@@ -60,10 +58,8 @@ export const getPackageByCategoryPriceAndSort = async (category, price, sort) =>
   if (sort != null && category != 0) {
     params.category = category;
   }
-  console.log("c",category,"p",price,"s",sort)
   try {
     const { data } = await axios.get(endpoints.getPackages, { params: params });
-    console.log("object", data)
     return data;
   } catch (error) {
     console.log(error);

@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../assets/css/Booking.css/";
+import ReservationModal from "../components/ReservaModal";
+import ReservationDetails from "../components/ReservationDetails";
 
 const Booking = () => {
   const [formData, setFormData] = useState({
-    dni: "",
-    firstName: "",
+    name: "",
     lastName: "",
     email: "",
-    birthDate: "",
-    phone: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -28,22 +27,23 @@ const Booking = () => {
     setLoading(true);
     setError("");
     setSuccess(false);
-
+    const token = localStorage.getItem("token");
+    
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
       // Realiza la solicitud POST usando Axios
-      const response = await axios.post("https://api.com/reservas", formData);
+      const response = await axios.post(
+        "https://c20-54-t-node-react.onrender.com/api/v1/reservation",
+        formData,
+        config
+      );
 
       // Si la solicitud es exitosa, manejamos la respuesta
       console.log("Respuesta del servidor:", response.data);
+
       setSuccess(true); // Indica que la reserva fue exitosa
-      setFormData({
-        dni: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        birthDate: "",
-        phone: "",
-      }); // Resetea el formulario
     } catch (err) {
       console.error("Error al realizar la reserva:", err);
       setError("Hubo un error al procesar la reserva. Inténtalo de nuevo.");
@@ -54,6 +54,7 @@ const Booking = () => {
 
   return (
     <div className="w-full">
+      <ReservationModal />
       <div className="reservation-container">
         <div className="reservation-content">
           <div className="reservation-banner">
@@ -63,13 +64,7 @@ const Booking = () => {
             <p className="font-bold text-primary-color">
               Completa los siguientes datos para realizar tu reserva
             </p>
-            <div className="bg-bg-info w-1\/2 bui-grid">
-              <aside className="py-2 px-4">
-                <div className="">
-                  <section className="">detalles de la reserva </section>
-                </div>
-              </aside>
-            </div>
+            <div className="bg-bg-info "></div>
           </div>
           <div className="reservation-form  bg-bg-info">
             <form onSubmit={handleSubmit}>
@@ -140,19 +135,6 @@ const Booking = () => {
                 />
               </div>
 
-              <div className="my-4 font-bold ">
-                <label htmlFor="phone">Número de Teléfono:</label>
-                <input
-                  className="rounded-full flex text-sm w-full  py-2 px-4 md:me-0"
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
               <button
                 className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
                 type="submit"
@@ -166,6 +148,8 @@ const Booking = () => {
               )}
               {error && <p className="error-message">{error}</p>}
             </form>
+            {/* Pasar los datos del formulario como props a ReservationDetails */}
+            {/*<ReservationDetails formData={formData} />*/}
           </div>
         </div>
       </div>

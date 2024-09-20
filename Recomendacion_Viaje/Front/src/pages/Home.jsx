@@ -66,7 +66,6 @@ const Home = () => {
       if (sort != null) {
         switch (sort) {
           case "lowPrice":
-            console.log("entre al switch min");
             getPackageSort(filterActive, budget, "min")
               .then((response) =>
                 setPackages(response)
@@ -74,7 +73,6 @@ const Home = () => {
               .catch((e) => console.log(e));
             break;
           case "highPrice":
-            console.log("entre al switch max");
             getPackageSort(filterActive, budget, "max")
               .then((response) =>
                 setPackages(response)
@@ -302,7 +300,7 @@ const Home = () => {
             <figcaption className="absolute inset-0 flex flex-col justify-center items-center w-1/2 h-3/4 bg-bg-opinions top-10 left-10">
               <figure className="max-w-screen-md mx-auto text-center">
                 <svg
-                  className="w-10 h-10 mx-auto mb-3 text-gray-400 dark:text-gray-600"
+                  className="w-8 h-8 mx-auto mb-3 text-gray-400 dark:text-gray-600"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -311,10 +309,8 @@ const Home = () => {
                   <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
                 </svg>
                 <blockquote>
-                  <p className="text-2xl italic font-medium text-gray-900 dark:text-white">
-                    "Flowbite is just awesome. It contains tons of predesigned
-                    components and pages starting from login screen to complex
-                    dashboard. Perfect choice for your next SaaS application."
+                  <p className="text-xl italic font-medium text-gray-900 dark:text-white">
+                    "Hacer un viaje a la montaña con PresuViaje fue una de las mejores decisiones que he tomado. Desde el principio, la organización fue impecable. El equipo de la agencia se encargó de todos los detalles, desde el transporte hasta las recomendaciones de equipo y ropa adecuada para el clima."
                   </p>
                 </blockquote>
                 <figcaption className="flex items-center justify-center mt-6 space-x-3 rtl:space-x-reverse">

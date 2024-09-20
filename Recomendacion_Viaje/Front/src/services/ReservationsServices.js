@@ -1,5 +1,5 @@
+
 import axios from "axios";
-import endpoints from "./endpoints";
 
 export const makeReservation = async (reservation) => {
   const config = {
@@ -11,6 +11,7 @@ export const makeReservation = async (reservation) => {
       reservation.data,
       config
     );
+    console.log("object",response)
     return response.data;
   } catch (err) {
     console.error(err);
@@ -18,23 +19,15 @@ export const makeReservation = async (reservation) => {
 };
 
 //traer reservación por id
-export const getReservationByID = async (reservationId) => {
-  try {
-    const response = await axios.get(endpoints.getBookingById(reservationId)
-    );
-    return response.data;
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const getReservation = async (token) => {
+export const getReservationById = async (reservation) => {
   const config = {
-    headers: { Authorization: `Bearer ${token}` }
+    headers: { Authorization: `Bearer ${reservation.token}` },
   };
   try {
-    const {data} = await axios.get(endpoints.getBooking,config);
-    return data;
+    const response = await axios.get(
+      `https://c20-54-t-node-react.onrender.com/api/v1/reservation/${reservation.id}`,config
+    );
+    return response.data;
   } catch (err) {
     console.error(err);
   }

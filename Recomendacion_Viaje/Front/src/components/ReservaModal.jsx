@@ -1,72 +1,86 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Importar useNavigate
-import "../assets/css/modal.css"; // Estilos del modal
+import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Importar axios si necesitas hacer la solicitud al backend
 import { makeReservation } from "../services/ReservationsServices";
+import "../assets/css/modal.css";
 
 const ReservationModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [reservationFor, setReservationFor] = useState("");
-  const [reservationId, setReservationID] = useState(null);
-  const [isForMe, setIsForMe] = useState(true); // Estado para saber si la reserva es para el usuario o para otra persona
+  const [reservaId, setReservaID] = useState(null);
+  const [isForMe, setIsForMe] = useState(true); // Para identificar si es para el usuario o para otra persona
   const [userData, setUserData] = useState({
     name: "",
     lastName: "",
-    idAt: "",
+
     email: "",
-    dateBirth: "",
   });
+  const [loading, setLoading] = useState(false); // Estado para manejar el loading
+  const [error, setError] = useState(""); // Estado para manejar errores
 
-  const navigate = useNavigate(); // Hook para redirigir
-  const packageId = "66e24b70879b6a6141505431"; //cambiarlo por el dato real
-  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
-  // Abrir el modal automáticamente cuando el componente se monte
   useEffect(() => {
-    setIsModalOpen(true);
+    setIsModalOpen(true); // Abre el modal al montar el componente
   }, []);
 
-  // Función para cerrar el modal
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsModalOpen(false); // Función para cerrar el modal
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isForMe) {
-      console.log("Reserva para mí");
-      // Lógica si la reserva es para el usuario
-      // const reservationDetails = {
-      //   name: "John", // Aquí puedes obtener el nombre real del usuario
-      //   lastName: "Doe",
-      //   idAt: "12345678",
-      //   email: "john.doe@example.com",
-      //   dateBirth: "01/01/1990",
+    setLoading(true); // Indicador de carga
+    setError(""); // Limpiar errores previos
 
-      //   // Otros detalles de la reserva
-      // };
-      const reservationDetails = {
+    // const reservationDetails = {
+    //   name: isForMe ? "John" : userData.name, // Datos de ejemplo, debes reemplazar con los reales
+    //   lastName: isForMe ? "Doe" : userData.lastName,
+    //   email: isForMe ? "john.doe@example.com" : userData.email,
+
+    // };
+
+    // try {
+    if (isForMe) {
+      const packageId = "66e24b70879b6a6141505431"; //cambiarlo por el dato real
+      const token = localStorage.getItem("token");
+
+      const reservationData = {
         token: token,
         data: {
           isGuest: false,
           packageID: packageId,
         },
       };
-      makeReservation(reservationDetails)
-        .then((response) => {
-          console.log("response", response);
-          // navigate(`/reservation-details/${response.data._id}`);
-        })
-        .catch((e) => console.log(e));
+      // Si la reserva es para el usuario
+      console.log("Reserva para mí");
 
-      console.log("reservacion", reservationDetails);
-      // Redirigir a la página de detalles de la reserva si es para el usuario
+      // Aquí podrías hacer una petición al backend, si es necesario
+      // const response = await axios.post(
+      //   "https://c20-54-t-node-react.onrender.com/api/v1/reservation", // Reemplazar con el endpoint real
+      //   reservationDetails
+      // );
+      // console.log("Reserva exitosa:", response.data);
+
+      //ya habiamos creado un servicio para esto solo toca consumirlo
+
+      makeReservation(reservationData)
+        .then((response) =>
+          navigate(`/reservation-details/${response.data._id}`)
+        )
+        .catch((e) => console.error(e));
     } else {
-      console.log("Reserva para otra persona:", reservationFor);
-      //cierra el modal
-      closeModal();
+      // Si la reserva es para otra persona
+      // console.log("Reserva para otra persona:", reservationDetails);
 
-      // Redirigir al formulario si la reserva es para otra persona
+      // Cierra el modal
+      closeModal();
     }
+    // } catch (err) {
+    //   console.error("Error al realizar la reserva:", err);
+    //   setError("Hubo un problema al realizar la reserva. Inténtalo de nuevo.");
+    // } finally {
+    //   setLoading(false); // Deja de cargar después de la solicitud
+    // }
   };
 
   return (
@@ -75,7 +89,8 @@ const ReservationModal = () => {
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>¿Para quién es la reserva?</h2>
-
+            {error && <p className="text-red-500">{error}</p>}{" "}
+            {/* Mostrar errores si existen */}
             <form onSubmit={handleSubmit}>
               <div>
                 <label>
@@ -107,8 +122,9 @@ const ReservationModal = () => {
                 <button
                   type="submit"
                   className="flex text-sm bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
+                  disabled={loading} // Desactivar el botón mientras se realiza la solicitud
                 >
-                  Confirmar
+                  {loading ? "Confirmando..." : "Confirmar"}
                 </button>
                 <button
                   type="button"
@@ -127,3 +143,4 @@ const ReservationModal = () => {
 };
 
 export default ReservationModal;
+

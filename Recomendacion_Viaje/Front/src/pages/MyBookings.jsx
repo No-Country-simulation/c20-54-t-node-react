@@ -23,7 +23,6 @@ const MyBookings = () => {
     const token = localStorage.getItem("token");
     getReservation(token)
       .then((response) => {
-        console.log("respuesta", response.data);
         setBooking(response.data);
       })
       .catch((e) => console.log(e));

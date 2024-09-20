@@ -83,7 +83,7 @@ const MyBookings = () => {
               </span>
               <span className="flex text-center">
                 <h2 className="font-title font-semibold mr-2 ">
-                  Inicio del viaje:{" "}
+                  Fecha de salida:{" "}
                 </h2>
                 <p>
                   {" "}
@@ -96,7 +96,7 @@ const MyBookings = () => {
               </span>
               <span className="flex text-center">
                 <h2 className="font-title font-semibold mr-2 ">
-                  Fecha de fin del viaje:
+                  Fecha de regreso:
                 </h2>
                 <p>
                   {format(

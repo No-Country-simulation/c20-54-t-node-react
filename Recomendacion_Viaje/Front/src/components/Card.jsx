@@ -1,10 +1,8 @@
 import Stars from "./Stars";
 import React, { useEffect } from "react";
-import banner from "../assets/spinner.gif";
 import Loader from "./Loader/Loader";
 
 const Card = ({ data = {}, loader = false }) => {
-  console.log(banner);
   return (
     <div className="w-2/3 h-max rounded overflow-hidden shadow-lg mt-10 -ml-20  ">
       <h1 className="text-3xl font-extrabold dark:text-black mb-4">

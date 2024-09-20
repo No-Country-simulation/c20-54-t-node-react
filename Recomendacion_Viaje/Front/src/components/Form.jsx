@@ -18,7 +18,7 @@ const Form = ({ data = {} }) => {
     if (dateStartValue) {
       // Parsear la fecha y formatearla a YYYY-MM-DD
       const parsedDate = parseISO(dateStartValue);
-      const formattedDate = format(parsedDate, "yyyy-MM-dd");
+      const formattedDate = format(parsedDate, "dd-MMM-yy");
       setDateStart(formattedDate);
     } else {
       setDateStart(""); // o alguna fecha por defecto
@@ -26,7 +26,7 @@ const Form = ({ data = {} }) => {
     if (dateEndValue) {
       // Parsear la fecha y formatearla a YYYY-MM-DD
       const parsedDate = parseISO(dateEndValue);
-      const formattedDate = format(parsedDate, "yyyy-MM-dd");
+      const formattedDate = format(parsedDate, "dd - MMM - yy");
       setDateEnd(formattedDate);
     } else {
       setDateEnd(""); // o alguna fecha por defecto
@@ -36,39 +36,40 @@ const Form = ({ data = {} }) => {
     <>
       <form className="w-full max-w-sm rounded overflow-hidden shadow-lg ml-6 p-4 h-1/3 mt-10 relative  ">
         <h2 className="mb-4 ml-14 font-bold text-xl">Reserva</h2>
-        <div className="md:w-1/3">
-          <label className="w-full block text-left mb-2 ml-14">
-            Fecha de Inicio
+        <div className="">
+          <label className="w-full block mb-2 ml-14 font-bold">
+            Fecha de Salida
           </label>
         </div>
         <div className="md:flex md:items-center mb-6 items-center justify-center">
           <div className="md:w-2/3">
-            <input
-              className="bg-gray-200 appearance-none border-2 border-gray-200 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-              id="date-from"
-              type="date"
-              defaultValue={dateStart}
-              onChange={(e) => console.log(e.target.value)}
-            />
+            <p
+              className="bg-gray-200 appearance-none w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+
+      
+            >
+              {dateStart}
+              </p>
           </div>
         </div>
-        <div className="md:w-1/3">
-          <label className="w-full block text-left mb-2 ml-14">
-            Fecha final
+        <div className="">
+          <label className="w-full block text-left mb-2 ml-14 font-bold">
+            Fecha de Regreso
           </label>
         </div>
         <div className="md:flex md:items-center mb-6 items-center justify-center">
           <div className="md:w-2/3">
-            <input
-              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-              id="date-to"
-              type="date"
-              defaultValue={dateEnd}
-            />
+            <p
+              className="bg-gray-200 appearance-none w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+
+      
+            >
+              {dateEnd}
+              </p>
           </div>
         </div>
         <div className="md:w-1/3">
-          <label className="block text-left mb-2 ml-14">Destino</label>
+          <label className="block text-left mb-2 ml-14 font-bold">Destino</label>
         </div>
         <div className="md:flex md:items-center mb-6 items-center justify-center">
           <div className="bg-primary-color bg-opacity-10 rounded-md w-40 text-center">

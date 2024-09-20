@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../assets/css/Booking.css/";
 import ReservationModal from "../components/ReservaModal";
+import ReservationDetails from "../components/ReservationDetails";
 
 const Booking = () => {
   const [formData, setFormData] = useState({
     name: "",
     lastName: "",
-    idAt: "",
     email: "",
-    dateBirth: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -144,7 +143,7 @@ const Booking = () => {
               {error && <p className="error-message">{error}</p>}
             </form>
             {/* Pasar los datos del formulario como props a ReservationDetails */}
-            {/*   <ReservationDetails formData={formData} />*/}
+            {/*<ReservationDetails formData={formData} />*/}
           </div>
         </div>
       </div>

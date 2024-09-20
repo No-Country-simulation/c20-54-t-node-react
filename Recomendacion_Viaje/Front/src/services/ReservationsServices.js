@@ -1,3 +1,4 @@
+
 import axios from "axios";
 
 export const makeReservation = async (reservation) => {
@@ -18,10 +19,13 @@ export const makeReservation = async (reservation) => {
 };
 
 //traer reservación por id
-export const getReservation = async (reservationId) => {
+export const getReservationById = async (reservation) => {
+  const config = {
+    headers: { Authorization: `Bearer ${reservation.token}` },
+  };
   try {
     const response = await axios.get(
-      `https://c20-54-t-node-react.onrender.com/api/v1/reservation${reservationId}`
+      `https://c20-54-t-node-react.onrender.com/api/v1/reservation/${reservation.id}`,config
     );
     return response.data;
   } catch (err) {

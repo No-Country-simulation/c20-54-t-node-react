@@ -28,14 +28,11 @@ const LoginBooking = () => {
     setSuccess(false);
 
     try {
-      console.log("formData:", formData);
       // Hacemos la solicitud POST para autenticar
       const response = await axios.post(
         "https://c20-54-t-node-react.onrender.com/api/v1/users/",
         formData
       );
-
-      console.log("Respuesta del servidor:", response.data);
 
       // Suponemos que el servidor devuelve un token si la autenticación es exitosa
       if (response.data.data.token) {
@@ -43,7 +40,6 @@ const LoginBooking = () => {
         localStorage.setItem("token", response.data.data.token);
         localStorage.setItem("user_id", response.data.data.user._id);
 
-        console.log("storage");
         setSuccess(true); // Cambiamos el estado a éxito
         navigate(`/`);
       }

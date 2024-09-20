@@ -11,7 +11,6 @@ export const makeReservation = async (reservation) => {
       reservation.data,
       config
     );
-    console.log("object",response)
     return response.data;
   } catch (err) {
     console.error(err);

@@ -66,7 +66,6 @@ const Home = () => {
       if (sort != null) {
         switch (sort) {
           case "lowPrice":
-            console.log("entre al switch min");
             getPackageSort(filterActive, budget, "min")
               .then((response) =>
                 setPackages(response)
@@ -74,7 +73,6 @@ const Home = () => {
               .catch((e) => console.log(e));
             break;
           case "highPrice":
-            console.log("entre al switch max");
             getPackageSort(filterActive, budget, "max")
               .then((response) =>
                 setPackages(response)

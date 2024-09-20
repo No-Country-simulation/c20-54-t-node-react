@@ -6,17 +6,21 @@ import { getUserById } from "../../../services/userServices";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const [user,setUser] = useState( null);
-  const [actual,setActual] = useState( false);
+  const [user, setUser] = useState(null);
+  const [actual, setActual] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem("user_id")
-    getUserById(user).then((response) => {
-        setUser(response.data)
-    }).catch((e)=> console.log(e))
-  }, [actual])
-  
+    const userData = localStorage.getItem("user_id");
+    userData != null
+      ? getUserById(userData)
+          .then((response) => {
+            setUser(response.data);
+          })
+          .catch((e) => console.log(e))
+      : setUser(null);
+  }, [actual]);
+
   React.useEffect(() => {
     // Animación GSAP para la carga inicial
     gsap.to(".logo", {
@@ -34,15 +38,14 @@ const NavBar = () => {
     });
   }, []);
 
-  const handleLogout = (e) =>{
-    e.preventDefault();
-    console.log("cerrar sesión")
-    localStorage.removeItem('token')
-    localStorage.removeItem('user_id')
-    setShowUserMenu(false)
-    setActual(!actual)
-    navigate(`/login`)
-  }
+  const handleLogout = (e) => {
+    // e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    setShowUserMenu(false);
+    setActual(!actual);
+    navigate("/");
+  };
   return (
     <header className="w-full m-0 p-0">
       <nav className="w-full flex justify-around items-center py-2.5 px-0 bg-secondary-color text-primary-color">
@@ -93,37 +96,37 @@ const NavBar = () => {
               Sing In
             </button>
           )}
-           {showUserMenu ? (
-                <div
-                  className="absolute top-8 right-5 z-50 my-4 text-base list-none bg-secondary-color divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600"
-                  id="user-dropdown"
-                >
-                  <div className="px-4 py-3">
-                    <span className="block text-sm text-gray-900 font-semibold">
-                      Hola {user?.name}
-                    </span>
-                  </div>
-                  <ul className="py-2" aria-labelledby="user-menu-button">
-                    <li>
-                      <Link
-                        to={`/myBookings`}
-                        onClick={()=>setShowUserMenu(false)}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-color hover:text-secondary-color"
-                      >
-                        Mis Reservaciones
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        onClick={(e) => handleLogout(e)}
-                        className="w-full block px-4 py-2 text-sm text-start text-gray-700 hover:bg-primary-color hover:text-secondary-color"
-                      >
-                        Cerrar Sesion
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              ) : null}
+          {showUserMenu ? (
+            <div
+              className="absolute top-8 right-5 z-50 my-4 text-base list-none bg-secondary-color divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+              id="user-dropdown"
+            >
+              <div className="px-4 py-3">
+                <span className="block text-sm text-gray-900 font-semibold">
+                  Hola {user?.name}
+                </span>
+              </div>
+              <ul className="py-2" aria-labelledby="user-menu-button">
+                <li>
+                  <Link
+                    to={`/myBookings`}
+                    onClick={() => setShowUserMenu(false)}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-color hover:text-secondary-color"
+                  >
+                    Mis Reservaciones
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={(e) => handleLogout(e)}
+                    className="w-full block px-4 py-2 text-sm text-start text-gray-700 hover:bg-primary-color hover:text-secondary-color"
+                  >
+                    Cerrar Sesion
+                  </button>
+                </li>
+              </ul>
+            </div>
+          ) : null}
         </div>
       </nav>
     </header>

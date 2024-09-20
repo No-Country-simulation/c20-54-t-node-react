@@ -35,15 +35,12 @@ const RegisterBooking = () => {
 
     // Cambiar el formato a mm/dd/yyyy
     const formattedDateBirth = `${day}-${month}-${year}`;
-    console.log(formattedDateBirth);
 
     // Crear una copia de formData con la fecha de nacimiento formateada
     const updatedFormData = {
       ...formData,
       dateBirth: formattedDateBirth,
     };
-
-    console.log("formData con fecha formateada:", updatedFormData);
 
     try {
       // Hacemos la solicitud POST con la fecha de nacimiento en formato mm/dd/yyyy
@@ -52,7 +49,6 @@ const RegisterBooking = () => {
         updatedFormData
       );
 
-      console.log("Respuesta del servidor:", response.data);
 
       if (response.data.success) {
         setSuccess(true);

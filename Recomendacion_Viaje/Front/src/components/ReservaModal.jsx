@@ -41,7 +41,7 @@ const ReservationModal = () => {
 
     // try {
     if (isForMe) {
-      const packageId = "66e24b70879b6a6141505431"; //cambiarlo por el dato real
+      const packageId = localStorage.getItem("package"); //cambiarlo por el dato real
       const token = localStorage.getItem("token");
 
       const reservationData = {

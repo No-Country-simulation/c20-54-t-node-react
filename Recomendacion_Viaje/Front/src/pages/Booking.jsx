@@ -27,11 +27,17 @@ const Booking = () => {
     setLoading(true);
     setError("");
     setSuccess(false);
+    const token = localStorage.getItem("token");
+    
     try {
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
       // Realiza la solicitud POST usando Axios
       const response = await axios.post(
         "https://c20-54-t-node-react.onrender.com/api/v1/reservation",
-        formData
+        formData,
+        config
       );
 
       // Si la solicitud es exitosa, manejamos la respuesta

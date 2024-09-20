@@ -11,6 +11,7 @@ const Form = ({ data = {} }) => {
   const [dateStart, setDateStart] = useState("");
   const [dateEnd, setDateEnd] = useState("");
 
+
   useEffect(() => {
     const dateStartValue = data?.package?.dateStart;
     const dateEndValue = data?.package?.dateEnd;
@@ -32,6 +33,12 @@ const Form = ({ data = {} }) => {
       setDateEnd(""); // o alguna fecha por defecto
     }
   }, [data]);
+
+  const handleReservation = (id, e)=>{
+    e.preventDefault()
+    localStorage.setItem("package", id);
+    navigate(`/booking`)
+  }
   return (
     <>
       <form className="w-full max-w-sm rounded overflow-hidden shadow-lg ml-6 p-4 h-1/3 mt-10 relative  ">
@@ -86,7 +93,7 @@ const Form = ({ data = {} }) => {
         <div className="ml-20">
           <div>
             <button
-              onClick={() => navigate(`/booking`)}
+              onClick={(e) => handleReservation(data.package?._id,e)}
               className=" bg-primary-color text-secondary-color font-bold py-2 px-4 rounded-md m-4 mt-4 h-10 transition-transform duration-300 transform hover:scale-105 hover:shadow-lg "
               type="buttton"
             >
